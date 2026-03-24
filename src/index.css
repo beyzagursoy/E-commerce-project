@@ -1,1 +1,34 @@
 @import "tailwindcss";
+
+@theme {
+  /* Figma Renkleri */
+  --color-primary: #23A6F0;      /* Mavi */
+  --color-success: #23856D;      /* Yeşil */
+  --color-alert: #E77C40;        /* Turuncu */
+  --color-danger: #E74040;       /* Kırmızı */
+  --color-dark-text: #252B42;    /* Başlıklar */
+  --color-second-text: #737373;  /* Paragraflar */
+  --color-light-gray: #FAFAFA;   /* Arka planlar */
+
+  /* Yazı Tipi */
+  --font-montserrat: "Montserrat", sans-serif;
+}
+
+/* @apply ile custom sınıflar (Figma'daki tekrar eden yapılar için) */
+@layer components {
+  .container-custom {
+    @apply w-full max-w-[1050px] mx-auto px-4 lg:px-0;
+  }
+  
+  .btn-primary {
+    @apply bg-[--color-primary] text-white font-bold py-3 px-10 rounded-[5px] hover:opacity-90 transition-all flex items-center justify-center;
+  }
+
+  .heading-main {
+    @apply font-montserrat font-bold text-[40px] lg:text-[58px] text-dark-text leading-tight;
+  }
+}
+
+body {
+  @apply font-montserrat text-dark-text bg-white;
+}
