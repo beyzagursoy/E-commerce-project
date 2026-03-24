@@ -16,6 +16,11 @@ const Footer = () => {
         </div>
       </div>
 
+      {/* Divider Line */}
+      <div className="max-w-[1050px] mx-auto px-8 lg:px-0">
+        <hr className="border-gray-200" />
+      </div>
+
       {/* ORTA BÖLÜM: Link Sütunları */}
       <div className="py-12 px-8 lg:px-0 bg-white">
         <div className="max-w-[1050px] mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
