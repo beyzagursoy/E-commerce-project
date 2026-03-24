@@ -16,6 +16,7 @@ import cart from "../assets/images/cart.png";
 import featured1 from "../assets/images/featured-1.jpg";
 import featured2 from "../assets/images/featured-2.jpg";
 import featured3 from "../assets/images/featured-3.jpg";
+import hazirgiyim from "../assets/images/hazir-giyim.jpg";
 
 export const homeData = {
     // Hero Slider
@@ -34,7 +35,7 @@ export const homeData = {
             title: "NEW COLLECTION",
             description: "We know how large objects will act, but things on a small scale.",
             buttonText: "SHOP NOW",
-            img: slider1
+            img: hazirgiyim
         }
     ],
     // Editor's Pick
