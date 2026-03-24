@@ -25,7 +25,6 @@ export default function ClassicSection() {
         >
           <div className="max-w-[1050px] mx-auto px-8 lg:px-0 flex flex-col lg:flex-row items-center justify-between w-full h-full pt-16 lg:pt-0">
             
-            {/* Metin İçeriği: mb-12 ve gap-8 ile daha ferah bir alan sağladık */}
             <div className="flex flex-col items-center lg:items-start text-center lg:text-left z-20 flex-1 order-1 lg:order-none pt-10">
               <h5 className="text-xl font-normal tracking-[0.1px] mb-8 lg:mb-10 ">
                 {slide.term}
@@ -44,7 +43,6 @@ export default function ClassicSection() {
               </div>
             </div>
 
-            {/* Ürün Görseli: mt-auto ve h-full ile en alta sabitledik */}
             <div className="w-full lg:flex-1 flex justify-center lg:justify-end items-end h-full relative z-10 mt-auto order-2 lg:order-none">
               <img 
                 src={slide.img} 
@@ -56,7 +54,6 @@ export default function ClassicSection() {
         </div>
       ))}
 
-      {/* Kontrol Okları: Okları görselin üzerine gelmeyecek şekilde konumlandırdık */}
       <button 
         onClick={prevSlide}
         className="absolute left-4 top-[55%] lg:top-1/2 -translate-y-1/2 z-30 p-2 text-white/70 hover:text-white"
@@ -70,7 +67,6 @@ export default function ClassicSection() {
         <ChevronRight size={48} strokeWidth={1} />
       </button>
 
-      {/* Alt çizgiler mobilde gizli */}
       <div className="hidden lg:flex absolute bottom-8 left-1/2 -translate-x-1/2 z-30 gap-2">
         {slides.map((_, i) => (
           <div 

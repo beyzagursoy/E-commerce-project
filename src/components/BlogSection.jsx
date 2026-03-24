@@ -55,19 +55,17 @@ const BlogSection = () => {
                   {post.desc}
                 </p>
 
-                {/* TARİH VE YORUM ALANI: Görseldeki ikonlarla birebir */}
                 <div className="flex justify-between items-center py-6 text-xs font-normal text-[#737373]">
                   <div className="flex items-center gap-2">
-                    <AlarmClock size={16} className="text-[#23A6F0]" /> {/* Mavi saat ikonu */}
+                    <AlarmClock size={16} className="text-[#23A6F0]" />
                     <span>{post.date}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <ChartArea size={16} className="text-[#23856D]" /> {/* Yeşil grafik ikonu */}
+                    <ChartArea size={16} className="text-[#23856D]" />
                     <span>{post.comments}</span>
                   </div>
                 </div>
 
-                {/* LEARN MORE: Görseldeki chevron ikonu ile */}
                 <div className="flex items-center gap-1 text-[#737373] font-bold text-sm hover:text-[#23A6F0] transition-colors mt-2 group/link">
                   Learn More 
                   <ChevronRight size={20} className="text-[#23A6F0] transition-transform group-hover/link:translate-x-1" />

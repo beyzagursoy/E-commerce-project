@@ -69,12 +69,10 @@ const Footer = () => {
             <h5 className="text-[#252B42] font-bold text-base">Get In Touch</h5>
             <div className="flex flex-col gap-2.5">
               
-              {/* Düzenlenen Dolgun Input ve Buton Grubu */}
               <div className="flex w-full items-stretch">
                 <input 
                   type="email" 
                   placeholder="Your Email" 
-                  // py-4 ve text-base ile Figma'daki o dolgun ve net görünüm sağlandı.
                   className="bg-[#F9F9F9] border border-[#E6E6E6] rounded-l-[5px] px-5 py-4 w-full text-base text-[#737373] placeholder:text-[#737373] focus:outline-none focus:border-[#23A6F0]"
                 />
                 <button 
