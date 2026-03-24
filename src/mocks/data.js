@@ -121,6 +121,16 @@ export const homeData = {
     ],
     slider2: [
         {
+            id: 1,
+            term: "SUMMER 2020",
+            title: "Vita Classic Product",
+            description: "We know how large objects will act, We know how are objects will act, We know",
+            price: "$16.48",
+            buttonText: "ADD TO CART",
+            img: slider2
+        },
+        {
+            id: 2,
             term: "SUMMER 2020",
             title: "Vita Classic Product",
             description: "We know how large objects will act, We know how are objects will act, We know",
