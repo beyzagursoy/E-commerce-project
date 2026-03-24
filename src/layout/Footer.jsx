@@ -18,7 +18,7 @@ const Footer = () => {
 
       {/* ORTA BÖLÜM: Link Sütunları */}
       <div className="py-12 px-8 lg:px-0 bg-white">
-        <div className="max-w-[1050px] mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
+        <div className="max-w-[1050px] mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
           
           {/* Sütun 1: Company Info */}
           <div className="flex flex-col gap-5">
@@ -64,8 +64,8 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Sütun 5: Get In Touch (Abone Ol Bölümü) */}
-          <div className="flex flex-col gap-5 lg:col-span-1">
+          {/* Sütun 5: Get In Touch - Takes up 2 columns */}
+          <div className="flex flex-col gap-5 sm:col-span-2 lg:col-span-2">
             <h5 className="text-[#252B42] font-bold text-base">Get In Touch</h5>
             <div className="flex flex-col gap-2.5">
               
