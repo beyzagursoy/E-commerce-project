@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { 
-  Phone, Mail, Search, ShoppingCart, Heart, User, Menu, X 
+  Phone, Mail, Search, ShoppingCart, Heart, User, Menu, X, Facebook, Instagram, Youtube, Twitter
 } from 'lucide-react';
 import { FaInstagram, FaYoutube, FaTwitter, FaFacebook } from "react-icons/fa";
 import { MdKeyboardArrowDown } from "react-icons/md";
@@ -23,10 +23,10 @@ export default function Header() {
         <div className="flex items-center gap-3">
           <span className="text-sm font-bold">Follow Us :</span>
           <div className="flex gap-3">
-            <FaInstagram size={16} className="cursor-pointer hover:text-[#23A6F0]"/>
-            <FaYoutube size={16} className="cursor-pointer hover:text-[#23A6F0]"/>
-            <FaFacebook size={16} className="cursor-pointer hover:text-[#23A6F0]"/>
-            <FaTwitter size={16} className="cursor-pointer hover:text-[#23A6F0]"/>
+            <Instagram size={18} className="cursor-pointer hover:scale-110 transition-transform" />
+            <Youtube size={18} className="cursor-pointer hover:scale-110 transition-transform" />
+            <Facebook size={18} className="cursor-pointer hover:scale-110 transition-transform" />
+            <Twitter size={18} className="cursor-pointer hover:scale-110 transition-transform" />
           </div>
         </div>
       </div>

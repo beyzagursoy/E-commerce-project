@@ -1,5 +1,6 @@
 import React from 'react';
 import { FaFacebook, FaInstagram, FaTwitter } from 'react-icons/fa';
+import { Facebook, Instagram, Twitter } from 'lucide-react';
 
 const Footer = () => {
   return (
@@ -9,9 +10,9 @@ const Footer = () => {
         <div className="max-w-[1050px] mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
           <h3 className="text-[#252B42] font-bold text-2xl tracking-[0.1px]">Bandage</h3>
           <div className="flex gap-5 text-[#23A6F0] text-2xl">
-            <FaFacebook className="cursor-pointer hover:text-[#252B42] transition-colors" />
-            <FaInstagram className="cursor-pointer hover:text-[#252B42] transition-colors" />
-            <FaTwitter className="cursor-pointer hover:text-[#252B42] transition-colors" />
+            <Facebook className="cursor-pointer hover:text-[#252B42] transition-colors" />
+            <Instagram className="cursor-pointer hover:text-[#252B42] transition-colors" />
+            <Twitter className="cursor-pointer hover:text-[#252B42] transition-colors" />
           </div>
         </div>
       </div>
