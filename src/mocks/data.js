@@ -17,6 +17,21 @@ import featured1 from "../assets/images/featured-1.jpg";
 import featured2 from "../assets/images/featured-2.jpg";
 import featured3 from "../assets/images/featured-3.jpg";
 import hazirgiyim from "../assets/images/hazir-giyim.jpg";
+import shop1 from "../assets/images/shop-1.jpg";
+import shop2 from "../assets/images/shop-2.jpg";
+import shop3 from "../assets/images/shop-3.jpg";
+import shop4 from "../assets/images/shop-4.jpg";
+import shop5 from "../assets/images/shop-5.jpg";
+import shop6 from "../assets/images/shop-6.jpg";
+import shop7 from "../assets/images/shop-7.jpg";
+import shop8 from "../assets/images/shop-8.jpg";
+import shop9 from "../assets/images/shop-9.jpg";
+import hooli from "../assets/brands/hooli.svg";
+import lyft from "../assets/brands/lyft.svg";
+import piperHat from "../assets/brands/hood.svg";
+import stripe from "../assets/brands/stripe.svg";
+import aws from "../assets/brands/aws.svg";
+import reddit from "../assets/brands/reddit.svg";
 
 export const homeData = {
     // Hero Slider
@@ -179,5 +194,132 @@ export const homeData = {
             comments: "10 comments",
             img: featured3
         }
-    ]
+    ],
+    shop: {
+        categories: [
+            { name: "CLOTHS", items: "5 Items", img: men },
+            { name: "CLOTHS", items: "5 Items", img: women },
+            { name: "CLOTHS", items: "5 Items", img: accessories },
+            { name: "CLOTHS", items: "5 Items", img: kids },
+            { name: "CLOTHS", items: "5 Items", img: hazirgiyim }
+        ],
+        brands: [
+            { id: 1, name: "hooli", img: hooli },
+            { id: 2, name: "lyft", img: lyft },
+            { id: 3, name: "piper hat", img: piperHat },
+            { id: 4, name: "stripe", img: stripe },
+            { id: 5, name: "aws", img: aws },
+            { id: 6, name: "reddit", img: reddit }
+        ]
+    },
+    shopProducts: [
+        {
+            id: 1,
+            title: "Graphic Design",
+            department: "English Department",
+            price: "$16.48",
+            salePrice: "$6.48",
+            colors: ["bg-sky-500", "bg-emerald-600", "bg-orange-500", "bg-slate-800"],
+            image: men
+        },
+        {
+            id: 2,
+            title: "Graphic Design",
+            department: "English Department",
+            price: "$16.48",
+            salePrice: "$6.48",
+            colors: ["bg-sky-500", "bg-emerald-600", "bg-orange-500", "bg-slate-800"],
+            image: women
+        },
+        {
+            id: 3,
+            title: "Graphic Design",
+            department: "English Department",
+            price: "$16.48",
+            salePrice: "$6.48",
+            colors: ["bg-sky-500", "bg-emerald-600", "bg-orange-500", "bg-slate-800"],
+            image: shop1
+        },
+        {
+            id: 4,
+            title: "Graphic Design",
+            department: "English Department",
+            price: "$16.48",
+            salePrice: "$6.48",
+            colors: ["bg-sky-500", "bg-emerald-600", "bg-orange-500", "bg-slate-800"],
+            image: kids
+        },
+        {
+            id: 5,
+            title: "Graphic Design",
+            department: "English Department",
+            price: "$16.48",
+            salePrice: "$6.48",
+            colors: ["bg-sky-500", "bg-emerald-600", "bg-orange-500", "bg-slate-800"],
+            image: shop2
+        },
+        {
+            id: 6,
+            title: "Graphic Design",
+            department: "English Department",
+            price: "$16.48",
+            salePrice: "$6.48",
+            colors: ["bg-sky-500", "bg-emerald-600", "bg-orange-500", "bg-slate-800"],
+            image: shop3
+        },
+        {
+            id: 7,
+            title: "Graphic Design",
+            department: "English Department",
+            price: "$16.48",
+            salePrice: "$6.48",
+            colors: ["bg-sky-500", "bg-emerald-600", "bg-orange-500", "bg-slate-800"],
+            image: shop4
+        },
+        {
+            id: 8,
+            title: "Graphic Design",
+            department: "English Department",
+            price: "$16.48",
+            salePrice: "$6.48",
+            colors: ["bg-sky-500", "bg-emerald-600", "bg-orange-500", "bg-slate-800"],
+            image: shop5
+        },
+        {
+            id: 9,
+            title: "Graphic Design",
+            department: "English Department",
+            price: "$16.48",
+            salePrice: "$6.48",
+            colors: ["bg-sky-500", "bg-emerald-600", "bg-orange-500", "bg-slate-800"],
+            image: shop6
+        },
+        {
+            id: 10,
+            title: "Graphic Design",
+            department: "English Department",
+            price: "$16.48",
+            salePrice: "$6.48",
+            colors: ["bg-sky-500", "bg-emerald-600", "bg-orange-500", "bg-slate-800"],
+            image: shop7
+        },
+        {
+            id: 11,
+            title: "Graphic Design",
+            department: "English Department",
+            price: "$16.48",
+            salePrice: "$6.48",
+            colors: ["bg-sky-500", "bg-emerald-600", "bg-orange-500", "bg-slate-800"],
+            image: shop8
+        },
+        {
+            id: 12,
+            title: "Graphic Design",
+            department: "English Department",
+            price: "$16.48",
+            salePrice: "$6.48",
+            colors: ["bg-sky-500", "bg-emerald-600", "bg-orange-500", "bg-slate-800"],
+            image: shop9
+        },
+    ],
 };

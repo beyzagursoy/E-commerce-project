@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { 
   Phone, Mail, Search, ShoppingCart, Heart, User, Menu, X 
 } from 'lucide-react';
@@ -8,10 +8,12 @@ import { MdKeyboardArrowDown } from "react-icons/md";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
+
+  const isActive = (path) => location.pathname === path;
 
   return (
-    <header className="w-full font-montserrat">
-      {/* 1. TOP BAR */}
+    <header className="w-full font-montserrat sticky top-0 z-50 bg-white">
       <div className="hidden lg:flex bg-[#252B42] text-white py-3 px-8 justify-between items-center w-full">
         <div className="flex gap-6 items-center font-bold text-sm">
           <div className="flex items-center gap-1"><Phone size={16}/> (225) 555-0118</div>
@@ -20,13 +22,16 @@ export default function Header() {
         <div className="font-bold text-sm tracking-tight">Follow Us and get a chance to win 80% off</div>
         <div className="flex items-center gap-3">
           <span className="text-sm font-bold">Follow Us :</span>
-          <div className="flex gap-3"><FaInstagram size={16}/><FaYoutube size={16}/><FaFacebook size={16}/><FaTwitter size={16}/></div>
+          <div className="flex gap-3">
+            <FaInstagram size={16} className="cursor-pointer hover:text-[#23A6F0]"/>
+            <FaYoutube size={16} className="cursor-pointer hover:text-[#23A6F0]"/>
+            <FaFacebook size={16} className="cursor-pointer hover:text-[#23A6F0]"/>
+            <FaTwitter size={16} className="cursor-pointer hover:text-[#23A6F0]"/>
+          </div>
         </div>
       </div>
 
-      {/* 2. MAIN NAVBAR */}
       <nav className="w-full bg-white px-8 py-4 lg:py-6 flex flex-col lg:flex-row items-center">
-        
         <div className="flex justify-between items-center w-full lg:w-auto lg:mr-[120px]">
           <Link to="/" className="text-2xl font-bold text-[#252B42]">Bandage</Link>
           
@@ -46,12 +51,16 @@ export default function Header() {
           mt-8 lg:mt-0 
           text-[#737373] font-bold text-lg lg:text-sm
         `}>
-          <Link to="/" className="hover:text-primary">Home</Link>
-          <Link to="/shop" className="text-[#252B42] flex items-center gap-1">Shop <MdKeyboardArrowDown size={20}/></Link>
-          <Link to="/about" className="hover:text-primary">About</Link>
-          <Link to="/blog" className="hover:text-primary">Blog</Link>
-          <Link to="/contact" className="hover:text-primary">Contact</Link>
-          <Link to="/pages" className="hover:text-primary">Pages</Link>
+          <Link to="/" className={`hover:text-[#23A6F0] transition-colors ${isActive('/') ? 'text-[#252B42]' : ''}`}>Home</Link>
+          
+          <Link to="/shop" className={`flex items-center gap-1 hover:text-[#23A6F0] transition-colors ${isActive('/shop') ? 'text-[#252B42]' : ''}`}>
+            Shop <MdKeyboardArrowDown size={20}/>
+          </Link>
+          
+          <Link to="/about" className="hover:text-[#23A6F0]">About</Link>
+          <Link to="/blog" className="hover:text-[#23A6F0]">Blog</Link>
+          <Link to="/contact" className="hover:text-[#23A6F0]">Contact</Link>
+          <Link to="/pages" className="hover:text-[#23A6F0]">Pages</Link>
         </div>
 
         <div className="hidden lg:flex items-center gap-6 text-[#23A6F0] font-bold">
@@ -62,7 +71,7 @@ export default function Header() {
            <div className="flex items-center gap-1 cursor-pointer">
               <ShoppingCart size={18}/> 1
            </div>
-           <div className="flex items-center gap-1 cursor-pointer text-[#23A6F0]">
+           <div className="flex items-center gap-1 cursor-pointer">
               <Heart size={18}/> 1
            </div>
         </div>
