@@ -17,15 +17,19 @@ import featured1 from "../assets/images/featured-1.jpg";
 import featured2 from "../assets/images/featured-2.jpg";
 import featured3 from "../assets/images/featured-3.jpg";
 import hazirgiyim from "../assets/images/hazir-giyim.jpg";
-import shop1 from "../assets/images/shop-1.jpg";
-import shop2 from "../assets/images/shop-2.jpg";
-import shop3 from "../assets/images/shop-3.jpg";
-import shop4 from "../assets/images/shop-4.jpg";
-import shop5 from "../assets/images/shop-5.jpg";
-import shop6 from "../assets/images/shop-6.jpg";
-import shop7 from "../assets/images/shop-7.jpg";
-import shop8 from "../assets/images/shop-8.jpg";
-import shop9 from "../assets/images/shop-9.jpg";
+import shoppage1 from "../assets/shop/shoppage-1.svg";
+import shoppage2 from "../assets/shop/shoppage-2.svg";
+import shoppage3 from "../assets/shop/shoppage-3.svg";
+import shoppage4 from "../assets/shop/shoppage-4.svg";
+import shop1 from "../assets/shop/shop-1.jpg";
+import shop2 from "../assets/shop/shop-2.jpg";
+import shop3 from "../assets/shop/shop-3.jpg";
+import shop4 from "../assets/shop/shop-4.jpg";
+import shop5 from "../assets/shop/shop-5.jpg";
+import shop6 from "../assets/shop/shop-6.jpg";
+import shop7 from "../assets/shop/shop-7.jpg";
+import shop8 from "../assets/shop/shop-8.jpg";
+import shop9 from "../assets/shop/shop-9.jpg";
 import hooli from "../assets/brands/hooli.svg";
 import lyft from "../assets/brands/lyft.svg";
 import piperHat from "../assets/brands/hood.svg";
@@ -197,11 +201,11 @@ export const homeData = {
     ],
     shop: {
         categories: [
-            { name: "CLOTHS", items: "5 Items", img: men },
-            { name: "CLOTHS", items: "5 Items", img: women },
-            { name: "CLOTHS", items: "5 Items", img: accessories },
-            { name: "CLOTHS", items: "5 Items", img: kids },
-            { name: "CLOTHS", items: "5 Items", img: hazirgiyim }
+            { name: "CLOTHS", items: "5 Items", img: shoppage1 },
+            { name: "CLOTHS", items: "5 Items", img: slider1 },
+            { name: "CLOTHS", items: "5 Items", img: shoppage2 },
+            { name: "CLOTHS", items: "5 Items", img: shoppage3 },
+            { name: "CLOTHS", items: "5 Items", img: shoppage4 }
         ],
         brands: [
             { id: 1, name: "hooli", img: hooli },
