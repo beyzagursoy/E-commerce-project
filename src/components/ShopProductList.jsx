@@ -25,9 +25,20 @@ const ShopProductList = ({ products, viewMode, setViewMode, activePage, setActiv
                         </div>
                     </div>
                     <div className="flex items-center gap-4">
-                        <select className="bg-[#F9F9F9] border border-[#DDDDDD] text-[#737373] py-3.5 px-5 rounded-[5px] text-sm focus:outline-none">
-                            <option>Popularity</option>
-                        </select>
+                        <div className="relative group">
+                            <select className="appearance-none bg-[#F9F9F9] border border-[#DDDDDD] text-[#737373] py-3.5 pl-5 pr-12 rounded-[5px] text-sm focus:outline-none cursor-pointer w-full font-normal">
+                                <option>Popularity</option>
+                                <option>Newest</option>
+                                <option>Price: Low to High</option>
+                                <option>Price: High to Low</option>
+                            </select>
+                            <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-[#737373]">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                    <path d="m6 9 6 6 6-6" />
+                                </svg>
+                            </div>
+                        </div>
+
                         <button className="bg-[#23A6F0] text-white px-10 py-3.5 rounded-[5px] font-bold text-sm hover:bg-[#1a8cd1] transition-colors">
                             Filter
                         </button>
@@ -35,8 +46,8 @@ const ShopProductList = ({ products, viewMode, setViewMode, activePage, setActiv
                 </div>
 
                 {/* Product List */}
-                <div className={viewMode === 'grid' 
-                    ? 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-8 gap-y-16 justify-items-center' 
+                <div className={viewMode === 'grid'
+                    ? 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-8 gap-y-16 justify-items-center'
                     : 'flex flex-col gap-8'}>
                     {products.map((product, index) => (
                         <div
@@ -68,8 +79,8 @@ const ShopProductList = ({ products, viewMode, setViewMode, activePage, setActiv
                     <div className="flex border border-[#BDBDBD] rounded-[7px] overflow-hidden font-bold text-sm bg-white">
                         <button className="px-6 py-6 border-r border-[#BDBDBD] text-[#BDBDBD] bg-[#F3F3F3]" onClick={() => setActivePage(1)}>First</button>
                         {[1, 2, 3].map((num) => (
-                            <button 
-                                key={num} 
+                            <button
+                                key={num}
                                 onClick={() => setActivePage(num)}
                                 className={`px-5 py-6 border-r border-[#BDBDBD] ${activePage === num ? 'text-white bg-[#23A6F0]' : 'text-[#23A6F0]'}`}
                             >
