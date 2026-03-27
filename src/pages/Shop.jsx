@@ -110,7 +110,7 @@ const Shop = () => {
                     {currentProducts.map((product, index) => (
                         <div
                             key={`${activePage}-${product.id}`}
-                            className={`group cursor-pointer transition-all duration-300 ${index >= 3 ? 'hidden md:flex' : 'flex'
+                            className={`group cursor-pointer transition-all duration-300 ${index >= 4 ? 'hidden md:flex' : 'flex'
                                 } ${viewMode === 'grid'
                                     ? 'flex-col items-center text-center w-full max-w-[239px]'
                                     : 'flex-row items-center gap-8 w-full border-b pb-8'
