@@ -3,7 +3,7 @@ import Header from './layout/Header';
 import Footer from './layout/Footer';
 import PageContent from './layout/PageContent'; 
 import HomePage from './pages/HomePage';
-import Shop from './pages/Shop'; // Yeni oluşturduğumuz Shop sayfasını içe aktarıyoruz
+import Shop from './pages/Shop'; 
 
 function App() {
   return (
