@@ -5,6 +5,7 @@ import PageContent from './layout/PageContent';
 import HomePage from './pages/HomePage';
 import Shop from './pages/ShopPage'; 
 import ProductDetail from './pages/ProductDetailPage'; 
+import ContactPage from './pages/ContactPage';
 
 function App() {
   return (
@@ -19,6 +20,10 @@ function App() {
 
           <Route path="/shop/:productId">
              <ProductDetail />
+          </Route>
+
+          <Route path="/contact">
+             <ContactPage />
           </Route>
 
           <Route path="/shop">

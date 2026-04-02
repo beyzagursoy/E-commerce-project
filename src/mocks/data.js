@@ -326,4 +326,10 @@ export const homeData = {
             image: shop9
         },
     ],
+    contactOffices:[
+        { city: 'Paris', address: '1901 Thorn ridge Cir.', zip: '75000 Paris' },
+        { city: 'New York', address: '2715 Ash Dr. San Jose,', zip: '75000 Paris' },
+        { city: 'Berlin', address: '4140 Parker Rd.', zip: '75000 Paris' }, 
+        { city: 'London', address: '3517 W. Gray St. Utica,', zip: '75000 Paris' }
+    ],
 };
