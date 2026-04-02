@@ -8,6 +8,7 @@ import ProductDetail from './pages/ProductDetailPage';
 import ContactPage from './pages/ContactPage';
 import TeamPage from './pages/TeamPage';
 import AboutPage from './pages/AboutPage';
+import SignUpPage from './pages/SignUpPage';
 
 function App() {
   return (
@@ -38,6 +39,10 @@ function App() {
 
           <Route path="/team">
              <TeamPage />
+          </Route>
+
+          <Route path="/signup">
+             <SignUpPage />
           </Route>
         </Switch>
       </PageContent>

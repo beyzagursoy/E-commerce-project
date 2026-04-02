@@ -36,6 +36,11 @@ import piperHat from "../assets/brands/hood.svg";
 import stripe from "../assets/brands/stripe.svg";
 import aws from "../assets/brands/aws.svg";
 import reddit from "../assets/brands/reddit.svg";
+import teamhero1 from "../assets/team/teamhero1.jpg";
+import teamhero2 from "../assets/team/teamhero2.jpg";
+import teamhero3 from "../assets/team/teamhero3.jpg";
+import teamhero4 from "../assets/team/teamhero4.jpg";
+import teamhero5 from "../assets/team/teamhero5.jpg";
 import team1 from "../assets/team/gokhanozdemir.jpg";
 import team2 from "../assets/team/beyzagursoy.jpg";
 import team3 from "../assets/team/team3.png";
@@ -345,6 +350,21 @@ export const homeData = {
         { city: 'London', address: '3517 W. Gray St. Utica,', zip: '75000 Paris' }
     ],
     team: {
+        header: {
+            tag: "WHAT WE DO",
+            title: "Innovation tailored for you",
+            breadcrumb: [
+                { name: "Home", link: "/" },
+                { name: "Team", link: "/team" }
+            ]
+        },
+        gallery: {
+            main: teamhero1, // Büyük kırmızı arka planlı görsel
+            sideTopLeft: teamhero2, // Coat yazılı görsel
+            sideTopRight: teamhero3, // Siyah hırkalı görsel
+            sideBottomLeft: teamhero4, // Jean ceketli görsel
+            sideBottomRight: teamhero5 // Mavi gömlekli görsel
+        },
         title: "Meet Our Team",
         subtitle: "Problems trying to resolve the conflict between the two major realms of Classical physics: Newtonian mechanics ",
         members: [

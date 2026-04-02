@@ -65,38 +65,39 @@ export default function Header() {
               Shop <MdKeyboardArrowDown size={20} className="hidden lg:block" />
             </Link>
             <Link to="/about" onClick={() => setIsMenuOpen(false)} className="hover:text-[#23A6F0]">About</Link>
+            <Link to="/team" onClick={() => setIsMenuOpen(false)} className="hover:text-[#23A6F0]">Team</Link>
             <Link to="/blog" onClick={() => setIsMenuOpen(false)} className="hover:text-[#23A6F0]">Blog</Link>
             <Link to="/contact" onClick={() => setIsMenuOpen(false)} className="hover:text-[#23A6F0]">Contact</Link>
             <Link to="/pages" onClick={() => setIsMenuOpen(false)} className="hover:text-[#23A6F0]">Pages</Link>
 
-            {/* MOBILE ONLY ACTIONS - */}
+            {/* MOBILE ONLY ACTIONS */}
             <div className="flex lg:hidden flex-col items-center gap-8 text-[#23A6F0] mt-4 pb-10">
-              <div className="flex items-center gap-2 cursor-pointer">
+              <Link
+                to="/signup"
+                onClick={() => setIsMenuOpen(false)}
+                className="flex items-center gap-2 cursor-pointer"
+              >
                 <User size={24} /> Login / Register
-              </div>
+              </Link>
+
               <Search size={24} className="cursor-pointer" />
-              <div className="flex items-center gap-2 cursor-pointer relative">
-                <ShoppingCart size={24} /> 1
-              </div>
-              <div className="flex items-center gap-2 cursor-pointer relative">
-                <Heart size={24} /> 1
-              </div>
+              {/* ... diğer ikonlar */}
             </div>
           </div>
 
 
           {/* 4. DESKTOP ONLY ACTIONS */}
           <div className="hidden lg:flex items-center gap-6 text-[#23A6F0] font-bold">
-            <div className="flex items-center gap-1 text-sm cursor-pointer whitespace-nowrap hover:opacity-80">
+            {/* Login / Register Linki */}
+            <Link
+              to="/signup"
+              className="flex items-center gap-1 text-sm cursor-pointer whitespace-nowrap hover:opacity-80"
+            >
               <User size={24} /> Login / Register
-            </div>
+            </Link>
+
             <Search size={24} className="cursor-pointer hover:scale-110 transition-transform" />
-            <div className="flex items-center gap-1 cursor-pointer hover:scale-110 transition-transform">
-              <ShoppingCart size={24} /> 1
-            </div>
-            <div className="flex items-center gap-1 cursor-pointer hover:scale-110 transition-transform">
-              <Heart size={24} /> 1
-            </div>
+            {/* ... diğer ikonlar */}
           </div>
         </div>
       </nav>
