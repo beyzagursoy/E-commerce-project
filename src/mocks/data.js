@@ -38,13 +38,16 @@ import aws from "../assets/brands/aws.svg";
 import reddit from "../assets/brands/reddit.svg";
 import team1 from "../assets/team/gokhanozdemir.jpg";
 import team2 from "../assets/team/beyzagursoy.jpg";
-import team3 from "../assets/team/team3.png";  
+import team3 from "../assets/team/team3.png";
 import team4 from "../assets/team/team4.png";
 import team5 from "../assets/team/team5.png";
 import team6 from "../assets/team/team6.png";
 import team7 from "../assets/team/team7.png";
 import team8 from "../assets/team/team8.png";
 import team9 from "../assets/team/team9.png";
+import aboutbanner from "../assets/images/aboutbanner.png";
+import aboutvideo from "../assets/videos/aboutvideo.mp4";
+import thumbnail from "../assets/images/thumbnail.png";
 
 export const homeData = {
     // Hero Slider
@@ -335,18 +338,18 @@ export const homeData = {
             image: shop9
         },
     ],
-    contactOffices:[
+    contactOffices: [
         { city: 'Paris', address: '1901 Thorn ridge Cir.', zip: '75000 Paris' },
         { city: 'New York', address: '2715 Ash Dr. San Jose,', zip: '75000 Paris' },
-        { city: 'Berlin', address: '4140 Parker Rd.', zip: '75000 Paris' }, 
+        { city: 'Berlin', address: '4140 Parker Rd.', zip: '75000 Paris' },
         { city: 'London', address: '3517 W. Gray St. Utica,', zip: '75000 Paris' }
     ],
     team: {
         title: "Meet Our Team",
         subtitle: "Problems trying to resolve the conflict between the two major realms of Classical physics: Newtonian mechanics ",
         members: [
-            { id: 1, name: "Gökhan Özdemir", role: "Project Manager", company: "Mitsubishi", tagline: "the quick fox jumps over the lazy dog", image: team1 },
-            { id: 2, name: "Beyza Gürsoy", role: "Full Stack Developer", company: "Mitsubishi", tagline: "the quick fox jumps over the lazy dog", image: team2 },
+            { id: 1, name: "Gökhan Özdemir", role: "Project Manager", company: "Project Manager", tagline: "the quick fox jumps over the lazy dog", image: team1 },
+            { id: 2, name: "Beyza Gürsoy", role: "Full Stack Developer", company: "Full Stack Developer", tagline: "the quick fox jumps over the lazy dog", image: team2 },
             { id: 3, name: "Eleanor Pena", role: "Founder", company: "Mitsubishi", tagline: "the quick fox jumps over the lazy dog", image: team3 },
             { id: 4, name: "Marvin McKinney", role: "Founder", company: "Mitsubishi", tagline: "the quick fox jumps over the lazy dog", image: team4 },
             { id: 5, name: "Floyd Miles", role: "Founder", company: "Mitsubishi", tagline: "the quick fox jumps over the lazy dog", image: team5 },
@@ -355,5 +358,35 @@ export const homeData = {
             { id: 8, name: "Dianne Russell", role: "Founder", company: "Mitsubishi", tagline: "the quick fox jumps over the lazy dog", image: team8 },
             { id: 9, name: "Devon Lane", role: "Founder", company: "Mitsubishi", tagline: "the quick fox jumps over the lazy dog", image: team9 },
         ]
+    },
+    aboutData: {
+        videoSection: {
+            videoUrl: aboutvideo,
+            thumbnail: thumbnail
+        },
+        hero: {
+            title: "ABOUT US",
+            description: "We know how large objects will act, but things on a small scale just do not act that way.",
+            cta: "Get Quote Now",
+            image: aboutbanner,
+        },
+        content: {
+            subTitle: "Problems trying",
+            title: "Met minim Mollie non desert Alamo est sit cliquey dolor do met sent.",
+            description: "Problems trying to resolve the conflict between the two major realms of Classical physics: Newtonian mechanics"
+        },
+        stats: [
+            { id: 1, label: "Happy Customers", value: "15K" },
+            { id: 2, label: "Monthly Visitors", value: "150K" },
+            { id: 3, label: "Countries Worldwide", value: "15" },
+            { id: 4, label: "Top Partners", value: "100+" }
+        ],
+        workWithUs: {
+            subTitle: "WORK WITH US",
+            title: "Now Let's grow Yours",
+            description: "The gradual accumulation of information about atomic and small-scale behavior during the first quarter of the 20th",
+            buttonText: "Button",
+            image: shop5
+        }
     },
 };
