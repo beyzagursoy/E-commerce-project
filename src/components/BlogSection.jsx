@@ -1,6 +1,6 @@
 import React from 'react';
 import { homeData } from '../mocks/data';
-import { AlarmClock, ChartArea, ChevronRight } from 'lucide-react'; // İkonları import ettik
+import { AlarmClock, ChartArea, ChevronRight } from 'lucide-react';
 
 const BlogSection = () => {
   const { posts } = homeData;

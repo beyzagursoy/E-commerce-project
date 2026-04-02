@@ -1,5 +1,4 @@
 import React from 'react';
-import { FaFacebook, FaInstagram, FaTwitter } from 'react-icons/fa';
 import { Facebook, Instagram, Twitter } from 'lucide-react';
 
 const Footer = () => {

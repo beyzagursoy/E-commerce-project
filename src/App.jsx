@@ -3,12 +3,12 @@ import Header from './layout/Header';
 import Footer from './layout/Footer';
 import PageContent from './layout/PageContent'; 
 import HomePage from './pages/HomePage';
-import Shop from './pages/Shop'; 
+import Shop from './pages/ShopPage'; 
+import ProductDetail from './pages/ProductDetailPage'; 
 
 function App() {
   return (
     <div className="min-h-screen flex flex-col font-montserrat">
-
       <Header />
 
       <PageContent>
@@ -16,12 +16,17 @@ function App() {
           <Route exact path="/">
             <HomePage />
           </Route>
-          
+
+          <Route path="/shop/:productId">
+             <ProductDetail />
+          </Route>
+
           <Route path="/shop">
              <Shop />
           </Route>
         </Switch>
       </PageContent>
+
       <Footer />
     </div>
   );

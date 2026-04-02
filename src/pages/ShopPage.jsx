@@ -13,7 +13,7 @@ const shuffleArray = (array) => {
     return shuffled;
 };
 
-const Shop = () => {
+const ShopPage = () => {
     const { shop, shopProducts } = homeData;
     const [activePage, setActivePage] = useState(2);
     const [viewMode, setViewMode] = useState('grid');
@@ -38,4 +38,4 @@ const Shop = () => {
     );
 };
 
-export default Shop;
+export default ShopPage;

@@ -1,5 +1,7 @@
 import React from 'react';
 import { LayoutGrid, List } from 'lucide-react';
+import { Link } from 'react-router-dom';
+
 const ShopProductList = ({ products, viewMode, setViewMode, activePage, setActivePage }) => {
     return (
         <section className="py-12 px-8 lg:px-0">
@@ -50,9 +52,10 @@ const ShopProductList = ({ products, viewMode, setViewMode, activePage, setActiv
                     ? 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-8 gap-y-16 justify-items-center'
                     : 'flex flex-col gap-8'}>
                     {products.map((product, index) => (
-                        <div
+                        <Link
+                            to={`/shop/${product.id}`}
                             key={product.id}
-                            className={`group cursor-pointer transition-all duration-300 
+                            className={`group cursor-pointer transition-all duration-300 no-underline text-inherit
                                 ${index >= 4 ? 'hidden md:flex' : 'flex'}
                                 ${viewMode === 'grid' ? 'flex-col items-center text-center w-full max-w-[239px]' : 'flex-row items-center gap-8 w-full border-b pb-8'}`}
                         >
@@ -70,7 +73,7 @@ const ShopProductList = ({ products, viewMode, setViewMode, activePage, setActiv
                                     {product.colors.map((color, i) => <div key={i} className={`w-4 h-4 rounded-full ${color}`} />)}
                                 </div>
                             </div>
-                        </div>
+                        </Link>
                     ))}
                 </div>
 
