@@ -6,6 +6,7 @@ import HomePage from './pages/HomePage';
 import Shop from './pages/ShopPage'; 
 import ProductDetail from './pages/ProductDetailPage'; 
 import ContactPage from './pages/ContactPage';
+import TeamPage from './pages/TeamPage';
 
 function App() {
   return (
@@ -22,12 +23,16 @@ function App() {
              <ProductDetail />
           </Route>
 
+          <Route path="/shop">
+             <Shop />
+          </Route>
+
           <Route path="/contact">
              <ContactPage />
           </Route>
 
-          <Route path="/shop">
-             <Shop />
+          <Route path="/team">
+             <TeamPage />
           </Route>
         </Switch>
       </PageContent>

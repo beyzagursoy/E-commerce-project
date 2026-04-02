@@ -36,6 +36,15 @@ import piperHat from "../assets/brands/hood.svg";
 import stripe from "../assets/brands/stripe.svg";
 import aws from "../assets/brands/aws.svg";
 import reddit from "../assets/brands/reddit.svg";
+import team1 from "../assets/team/gokhanozdemir.jpg";
+import team2 from "../assets/team/beyzagursoy.jpg";
+import team3 from "../assets/team/team3.png";  
+import team4 from "../assets/team/team4.png";
+import team5 from "../assets/team/team5.png";
+import team6 from "../assets/team/team6.png";
+import team7 from "../assets/team/team7.png";
+import team8 from "../assets/team/team8.png";
+import team9 from "../assets/team/team9.png";
 
 export const homeData = {
     // Hero Slider
@@ -332,4 +341,19 @@ export const homeData = {
         { city: 'Berlin', address: '4140 Parker Rd.', zip: '75000 Paris' }, 
         { city: 'London', address: '3517 W. Gray St. Utica,', zip: '75000 Paris' }
     ],
+    team: {
+        title: "Meet Our Team",
+        subtitle: "Problems trying to resolve the conflict between the two major realms of Classical physics: Newtonian mechanics ",
+        members: [
+            { id: 1, name: "Gökhan Özdemir", role: "Project Manager", company: "Mitsubishi", tagline: "the quick fox jumps over the lazy dog", image: team1 },
+            { id: 2, name: "Beyza Gürsoy", role: "Full Stack Developer", company: "Mitsubishi", tagline: "the quick fox jumps over the lazy dog", image: team2 },
+            { id: 3, name: "Eleanor Pena", role: "Founder", company: "Mitsubishi", tagline: "the quick fox jumps over the lazy dog", image: team3 },
+            { id: 4, name: "Marvin McKinney", role: "Founder", company: "Mitsubishi", tagline: "the quick fox jumps over the lazy dog", image: team4 },
+            { id: 5, name: "Floyd Miles", role: "Founder", company: "Mitsubishi", tagline: "the quick fox jumps over the lazy dog", image: team5 },
+            { id: 6, name: "Jenny Wilson", role: "Founder", company: "Mitsubishi", tagline: "the quick fox jumps over the lazy dog", image: team6 },
+            { id: 7, name: "Ronald Richards", role: "Founder", company: "Mitsubishi", tagline: "the quick fox jumps over the lazy dog", image: team7 },
+            { id: 8, name: "Dianne Russell", role: "Founder", company: "Mitsubishi", tagline: "the quick fox jumps over the lazy dog", image: team8 },
+            { id: 9, name: "Devon Lane", role: "Founder", company: "Mitsubishi", tagline: "the quick fox jumps over the lazy dog", image: team9 },
+        ]
+    },
 };
