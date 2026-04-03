@@ -359,11 +359,11 @@ export const homeData = {
             ]
         },
         gallery: {
-            main: teamhero1, // Büyük kırmızı arka planlı görsel
-            sideTopLeft: teamhero2, // Coat yazılı görsel
-            sideTopRight: teamhero3, // Siyah hırkalı görsel
-            sideBottomLeft: teamhero4, // Jean ceketli görsel
-            sideBottomRight: teamhero5 // Mavi gömlekli görsel
+            main: teamhero1, 
+            sideTopLeft: teamhero2, 
+            sideTopRight: teamhero3, 
+            sideBottomLeft: teamhero4, 
+            sideBottomRight: teamhero5 
         },
         title: "Meet Our Team",
         subtitle: "Problems trying to resolve the conflict between the two major realms of Classical physics: Newtonian mechanics ",
@@ -409,4 +409,78 @@ export const homeData = {
             image: shop5
         }
     },
+};
+
+export const pricingData = {
+    header: {
+        tag: "PRICING",
+        title: "Simple Pricing",
+        breadcrumb: [
+            { name: "Home", link: "/" },
+            { name: "Pricing", link: "/pricing" }
+        ]
+    },
+    pricingSection: {
+        title: "Pricing",
+        description: "Problems trying to resolve the conflict between the two major realms of Classical physics: Newtonian mechanics",
+        plans: [
+            {
+                name: "FREE",
+                price: "0",
+                currency: "$",
+                period: "Per Month",
+                features: [
+                    { text: "Unlimited product updates", included: true },
+                    { text: "Unlimited product updates", included: true },
+                    { text: "Unlimited product updates", included: true },
+                    { text: "1GB Cloud storage", included: false },
+                    { text: "Email and community support", included: false },
+                ],
+                buttonText: "Try for free",
+                isFeatured: false
+            },
+            {
+                name: "STANDARD",
+                price: "9.99",
+                currency: "$",
+                period: "Per Month",
+                features: [
+                    { text: "Unlimited product updates", included: true },
+                    { text: "Unlimited product updates", included: true },
+                    { text: "Unlimited product updates", included: true },
+                    { text: "1GB Cloud storage", included: true },
+                    { text: "Email and community support", included: false },
+                ],
+                buttonText: "Try for free",
+                isFeatured: true
+            },
+            {
+                name: "PREMIUM",
+                price: "19.99",
+                currency: "$",
+                period: "Per Month",
+                features: [
+                    { text: "Unlimited product updates", included: true },
+                    { text: "Unlimited product updates", included: true },
+                    { text: "Unlimited product updates", included: true },
+                    { text: "1GB Cloud storage", included: true },
+                    { text: "Email and community support", included: true },
+                ],
+                buttonText: "Try for free",
+                isFeatured: false
+            }
+        ]
+    },
+    faqs: {
+        title: "Pricing FAQs",
+        description: "Problems trying to resolve the conflict between the two major realms of Classical physics",
+        questions: [
+            { q: "the quick fox jumps over the lazy dog", a: "Met minim Mollie non desert Alamo est sit cliquey dolor do met sent. RELIT official consequent door ENIM RELIT Mollie. Excitation venial consequent sent nostrum met." },
+            { q: "the quick fox jumps over the lazy dog", a: "Met minim Mollie non desert Alamo est sit cliquey dolor do met sent. RELIT official consequent door ENIM RELIT Mollie. Excitation venial consequent sent nostrum met." },
+            { q: "the quick fox jumps over the lazy dog", a: "Met minim Mollie non desert Alamo est sit cliquey dolor do met sent. RELIT official consequent door ENIM RELIT Mollie. Excitation venial consequent sent nostrum met." },
+            { q: "the quick fox jumps over the lazy dog", a: "Met minim Mollie non desert Alamo est sit cliquey dolor do met sent. RELIT official consequent door ENIM RELIT Mollie. Excitation venial consequent sent nostrum met." },
+            { q: "the quick fox jumps over the lazy dog", a: "Met minim Mollie non desert Alamo est sit cliquey dolor do met sent. RELIT official consequent door ENIM RELIT Mollie. Excitation venial consequent sent nostrum met." },
+            { q: "the quick fox jumps over the lazy dog", a: "Met minim Mollie non desert Alamo est sit cliquey dolor do met sent. RELIT official consequent door ENIM RELIT Mollie. Excitation venial consequent sent nostrum met." },
+        ]
+    }
 };
