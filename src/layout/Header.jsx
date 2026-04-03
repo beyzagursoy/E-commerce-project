@@ -69,7 +69,6 @@ export default function Header() {
             <Link to="/blog" onClick={() => setIsMenuOpen(false)} className="hover:text-[#23A6F0]">Blog</Link>
             <Link to="/pricing" onClick={() => setIsMenuOpen(false)} className="hover:text-[#23A6F0]">Pricing</Link>
             <Link to="/contact" onClick={() => setIsMenuOpen(false)} className="hover:text-[#23A6F0]">Contact</Link>
-            <Link to="/pages" onClick={() => setIsMenuOpen(false)} className="hover:text-[#23A6F0]">Pages</Link>
 
             {/* MOBILE ONLY ACTIONS */}
             <div className="flex lg:hidden flex-col items-center gap-8 text-[#23A6F0] mt-4 pb-10">

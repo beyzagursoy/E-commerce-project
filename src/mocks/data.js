@@ -53,6 +53,12 @@ import team9 from "../assets/team/team9.png";
 import aboutbanner from "../assets/images/aboutbanner.png";
 import aboutvideo from "../assets/videos/aboutvideo.mp4";
 import thumbnail from "../assets/images/thumbnail.png";
+import blog1 from "../assets/blog/blog-1.jpg";
+import blog2 from "../assets/blog/blog-2.jpg";
+import blog3 from "../assets/blog/blog-3.jpg";
+import blog4 from "../assets/blog/blog-4.jpg";
+import blog5 from "../assets/blog/blog-5.jpg";
+import blog6 from "../assets/blog/blog-6.jpg";
 
 export const homeData = {
     // Hero Slider
@@ -483,4 +489,74 @@ export const pricingData = {
             { q: "the quick fox jumps over the lazy dog", a: "Met minim Mollie non desert Alamo est sit cliquey dolor do met sent. RELIT official consequent door ENIM RELIT Mollie. Excitation venial consequent sent nostrum met." },
         ]
     }
+};
+
+export const blogData = {
+    header: {
+        tag: "Practice Advice",
+        title: "Featured Posts",
+        description: "Problems trying to resolve the conflict between the two major realms of Classical physics: Newtonian mechanics"
+    },
+    posts: [
+        {
+            id: 1,
+            image: blog1,
+            tags: ["Google", "Trending", "New"],
+            title: "Koudetat à la Maison #1 (L'intégrale)",
+            description: "We focus on ergonomics and meeting you where you work. It's only a keystroke away.",
+            date: "22 April 2021",
+            comments: "10 comments",
+            isNew: true
+        },
+        {
+            id: 2,
+            image: blog2,
+            tags: ["Google", "Trending", "New"],
+            title: "Koudetat à la Maison #1 (L'intégrale)",
+            description: "We focus on ergonomics and meeting you where you work. It's only a keystroke away.",
+            date: "22 April 2021",
+            comments: "10 comments",
+            isNew: true
+        },
+        {
+            id: 3,
+            image: blog3,
+            tags: ["Google", "Trending", "New"],
+            title: "Koudetat à la Maison #1 (L'intégrale)",
+            description: "We focus on ergonomics and meeting you where you work. It's only a keystroke away.",
+            date: "22 April 2021",
+            comments: "10 comments",
+            isNew: true
+        },
+        {
+            id: 4,
+            image: blog4,
+            tags: ["Google", "Trending", "New"],
+            title: "Koudetat à la Maison #1 (L'intégrale)",
+            description: "We focus on ergonomics and meeting you where you work. It's only a keystroke away.",
+            date: "22 April 2021",
+            comments: "10 comments",
+            isNew: true
+        },
+        {
+            id: 5,
+            image: blog5,
+            tags: ["Google", "Trending", "New"],
+            title: "Koudetat à la Maison #1 (L'intégrale)",
+            description: "We focus on ergonomics and meeting you where you work. It's only a keystroke away.",
+            date: "22 April 2021",
+            comments: "10 comments",
+            isNew: true
+        },
+        {
+            id: 6,
+            image: blog6,
+            tags: ["Google", "Trending", "New"],
+            title: "Koudetat à la Maison #1 (L'intégrale)",
+            description: "We focus on ergonomics and meeting you where you work. It's only a keystroke away.",
+            date: "22 April 2021",
+            comments: "10 comments",
+            isNew: true
+        } 
+    ]
 };
