@@ -1,5 +1,5 @@
 import React from 'react';
-import { Clock, MessageCircle, ChevronRight } from 'lucide-react';
+import { AlarmClock, ChartArea, ChevronRight } from 'lucide-react';
 
 const BlogCard = ({ post }) => {
   return (
@@ -38,11 +38,11 @@ const BlogCard = ({ post }) => {
 
         <div className="flex justify-between items-center py-4">
           <div className="flex items-center gap-1 text-[#737373] text-xs font-bold">
-            <Clock size={14} className="text-[#23A6F0]" />
+            <AlarmClock size={14} className="text-[#23A6F0]" />
             {post.date}
           </div>
           <div className="flex items-center gap-1 text-[#737373] text-xs font-bold">
-            <MessageCircle size={14} className="text-[#2DC071]" />
+            <ChartArea size={14} className="text-[#2DC071]" />
             {post.comments}
           </div>
         </div>
