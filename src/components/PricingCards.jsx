@@ -20,7 +20,7 @@ const PricingCards = ({ data }) => {
           </div>
         </div>
 
-        <div className="flex flex-col md:flex-row items-center justify-center gap-0">
+        <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-0">
           {data.plans.map((plan, idx) => (
             <div 
               key={idx}
