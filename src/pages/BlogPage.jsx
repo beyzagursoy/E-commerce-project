@@ -17,8 +17,6 @@ const BlogPage = () => {
           {blogData.header.description}
         </p>
       </div>
-
-      {/* Grid Yapısı: Mobilde 1, Tablette 2, Masaüstünde 3 kolon */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
         {blogData.posts.map((post) => (
           <BlogCard key={post.id} post={post} />
