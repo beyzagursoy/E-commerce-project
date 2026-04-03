@@ -51,7 +51,7 @@ const ProductDetailPage = () => {
                 categoryImg={homeData.shop.categories[1].img} 
             />
 
-            <Bestseller />
+            <Bestseller showFullHeader={false}/>
             <ShopBrands brands={homeData.shop.brands} />
         </div>
     );
