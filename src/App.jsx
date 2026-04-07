@@ -11,6 +11,8 @@ import AboutPage from './pages/AboutPage';
 import SignUpPage from './pages/SignUpPage';
 import PricingPage from './pages/PricingPage';
 import BlogPage from './pages/BlogPage';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
@@ -58,6 +60,18 @@ function App() {
       </PageContent>
 
       <Footer />
+      <ToastContainer 
+        position="bottom-right" 
+        autoClose={5000} 
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
     </div>
   );
 }
