@@ -1,13 +1,13 @@
 const initialState = {
-  categories: [],
-  productList: [],
-  total: 0,
-  limit: 25,
-  offset: 0,
-  filter: "",
-  fetchState: "NOT_FETCHED" // "NOT_FETCHED", "FETCHING", "FETCHED", "FAILED"
+    productList: [],
+    total: 0,
+    fetchState: "NOT_FETCHED",
+    selectedProduct: null, 
+    categories: [],
+    limit: 25,
+    offset: 0,
+    filter: ""
 };
-
 export const productReducer = (state = initialState, action) => {
   switch (action.type) {
     case "SET_CATEGORIES":
@@ -18,6 +18,8 @@ export const productReducer = (state = initialState, action) => {
       return { ...state, total: action.payload };
     case "SET_FETCH_STATE":
       return { ...state, fetchState: action.payload };
+      case "SET_SELECTED_PRODUCT":
+    return { ...state, selectedProduct: action.payload, fetchState: "FETCHED" };
     case "SET_LIMIT":
       return { ...state, limit: action.payload };
     case "SET_OFFSET":

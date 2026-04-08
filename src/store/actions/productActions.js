@@ -47,3 +47,17 @@ export const fetchProducts = (params = {}) => {
       });
   };
 };
+
+export const fetchProductDetail = (productId) => (dispatch) => {
+    dispatch({ type: "SET_FETCH_STATE", payload: "FETCHING" });
+    
+    return API.get(`/products/${productId}`)
+        .then((res) => {
+            dispatch({ type: "SET_SELECTED_PRODUCT", payload: res.data });
+            dispatch({ type: "SET_FETCH_STATE", payload: "FETCHED" });
+        })
+        .catch((err) => {
+            console.error("Ürün çekme hatası:", err);
+            dispatch({ type: "SET_FETCH_STATE", payload: "FAILED" });
+        });
+};

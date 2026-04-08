@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, useHistory, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { ChevronRight } from 'lucide-react';
-import { fetchProducts } from '../store/actions/productActions';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { fetchProductDetail } from '../store/actions/productActions'; 
 import { homeData } from '../mocks/data';
 import ProductDetailSlider from '../components/ProductDetail/ProductDetailSlider';
 import ProductDetailInfo from '../components/ProductDetail/ProductDetailInfo';
@@ -12,35 +12,33 @@ import ShopBrands from '../components/Shop/ShopBrands';
 
 const ProductDetailPage = () => {
     const { productId } = useParams();
+    const history = useHistory();
     const dispatch = useDispatch();
+    
     const [activeTab, setActiveTab] = useState('description');
     const [currentSlide, setCurrentSlide] = useState(0);
 
-    const { productList, fetchState } = useSelector((state) => state.product);
-
-    const product = productList.find(p => String(p.id) === String(productId));
+    const { selectedProduct, fetchState } = useSelector((state) => state.product);
 
     useEffect(() => {
-        if (productList.length === 0 && fetchState !== 'FETCHING') {
-            dispatch(fetchProducts());
-        }
-
+    if (productId) {
         window.scrollTo(0, 0);
-        setCurrentSlide(0);
-    }, [productId, dispatch, productList.length, fetchState]);
+        dispatch(fetchProductDetail(productId));
+    }
+}, [productId, dispatch]);
 
-    if (!product) {
+    if (fetchState === 'FETCHING' || !selectedProduct) {
         return (
-            <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4 bg-white">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#23A6F0]"></div>
-                <p className="text-[#737373] font-bold font-montserrat">Loading Product...</p>
+            <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4 bg-white font-montserrat">
+                <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-[#23A6F0]"></div>
+                <p className="text-[#737373] font-bold">Loading Product...</p>
             </div>
         );
     }
 
-    const sliderImages = product.images && product.images.length > 0
-        ? product.images
-        : [{ url: product.image }];
+    const sliderImages = selectedProduct.images && selectedProduct.images.length > 0
+        ? selectedProduct.images
+        : [{ url: selectedProduct.image || 'https://via.placeholder.com/600x600' }];
 
     const nextSlide = () => {
         setCurrentSlide((prev) => (prev === sliderImages.length - 1 ? 0 : prev + 1));
@@ -52,15 +50,26 @@ const ProductDetailPage = () => {
 
     return (
         <div className="bg-[#FAFAFA] font-montserrat">
-            {/* 1. BREADCRUMB */}
-            <div className="max-w-[1050px] mx-auto py-6 px-8">
+            {/* 1. BREADCRUMB & BACK BUTTON */}
+            <div className="max-w-[1050px] mx-auto py-6 px-8 flex justify-between items-center">
                 <nav className="flex items-center gap-3 text-sm font-bold">
                     <Link to="/" className="text-[#252B42] hover:text-[#23A6F0]">Home</Link>
                     <ChevronRight size={16} className="text-[#BDBDBD]" />
                     <Link to="/shop" className="text-[#BDBDBD] hover:text-[#23A6F0]">Shop</Link>
                     <ChevronRight size={16} className="text-[#BDBDBD]" />
-                    <span className="text-[#737373] truncate max-w-[200px]">{product.name}</span>
+                    <span className="text-[#737373] truncate max-w-[150px] md:max-w-none">
+                        {selectedProduct.name}
+                    </span>
                 </nav>
+                
+                {/* Back Button */}
+                <button 
+                    onClick={() => history.goBack()}
+                    className="flex items-center gap-1 text-[#23A6F0] font-bold text-sm hover:underline transition-all"
+                >
+                    <ChevronLeft size={18} />
+                    Back
+                </button>
             </div>
 
             {/* 2. ANA ÜRÜN BÖLÜMÜ */}
@@ -72,18 +81,18 @@ const ProductDetailPage = () => {
                         setCurrentSlide={setCurrentSlide}
                         nextSlide={nextSlide}
                         prevSlide={prevSlide}
-                        productTitle={product.name}
+                        productTitle={selectedProduct.name}
                     />
-                    <ProductDetailInfo product={product} />
+                    <ProductDetailInfo product={selectedProduct} />
                 </div>
             </section>
 
-            {/* 3. TABLAR (Açıklama vb.) */}
+            {/* 3. TABLAR  */}
             <ProductDetailTabs
                 activeTab={activeTab}
                 setActiveTab={setActiveTab}
-                product={product}
-                categoryImg={product.images?.[0]?.url || product.image}
+                product={selectedProduct}
+                categoryImg={selectedProduct.images?.[0]?.url || selectedProduct.image}
             />
 
             {/* 4. DİĞER ÜRÜNLER VE MARKALAR */}
