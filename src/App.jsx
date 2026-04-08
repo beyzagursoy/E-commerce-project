@@ -13,8 +13,37 @@ import PricingPage from './pages/PricingPage';
 import BlogPage from './pages/BlogPage';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import LoginPage from './pages/LoginPage';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { API } from './api/api';
+import { setUser } from './store/actions/clientActions';
+import { toast } from 'react-toastify';
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    
+    if (token) {
+      API.get('/verify', {
+        headers: {
+          Authorization: token
+        }
+      })
+      .then(res => {
+        dispatch(setUser(res.data));
+        localStorage.setItem("token", res.data.token);
+      })
+      .catch(err => {
+        console.error("Verify error:", err);
+        localStorage.removeItem("token"); 
+        toast.error("Session expired, please login again.");
+      });
+    }
+  }, [dispatch]);
+
   return (
     <div className="min-h-screen flex flex-col font-montserrat">
       <Header />
@@ -55,6 +84,10 @@ function App() {
 
           <Route path="/signup">
              <SignUpPage />
+          </Route>
+
+          <Route path="/login">
+             <LoginPage />
           </Route>
         </Switch>
       </PageContent>

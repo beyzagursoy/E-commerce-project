@@ -3,6 +3,8 @@ import { useForm } from 'react-hook-form';
 import { useHistory, Link } from 'react-router-dom';
 import { API } from '../api/api';
 import { toast } from 'react-toastify';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchRoles } from '../store/actions/clientActions';
 
 const FormField = ({ label, error, children }) => (
   <div className="flex flex-col gap-1 w-full">
@@ -17,7 +19,10 @@ const FormField = ({ label, error, children }) => (
 );
 
 const SignUpPage = () => {
-  const [roles, setRoles] = useState([]);
+  const dispatch = useDispatch();
+
+  const roles = useSelector((state) => state.client.roles);
+  
   const [loading, setLoading] = useState(false);
   const history = useHistory();
 
@@ -35,13 +40,14 @@ const SignUpPage = () => {
   const selectedRole = watch("role_id");
 
   useEffect(() => {
-    API.get('/roles')
-      .then(res => {
-        setRoles(res.data);
-        setValue("role_id", "3");
-      })
-      .catch(err => console.error("Roles fetch error:", err));
-  }, [setValue]);
+    dispatch(fetchRoles());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (roles.length > 0) {
+      setValue("role_id", "3");
+    }
+  }, [roles, setValue]);
 
   const onSubmit = async (data) => {
     setLoading(true);
@@ -68,7 +74,6 @@ const SignUpPage = () => {
       history.goBack(); 
     } catch (error) {
       const serverError = error.response?.data;
-      // SQLITE çakışma hatası kontrolü (Username/Email tekrarı)
       if (serverError?.err?.code === "SQLITE_CONSTRAINT") {
         toast.error("This email or name is already registered!");
       } else {
@@ -83,7 +88,6 @@ const SignUpPage = () => {
     <div className="bg-[#FAFAFA] min-h-screen py-16 px-4 font-montserrat">
       <div className="max-w-[500px] mx-auto bg-white rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.04)] border border-gray-100 overflow-hidden">
         
-        {/* Başlık Bölümü */}
         <div className="bg-white p-8 text-center border-b border-gray-50">
           <h2 className="text-3xl font-bold text-[#252B42] tracking-tight text-center">Become a Member</h2>
           <p className="text-[#737373] text-sm mt-2">Join us and start shopping with exclusive deals.</p>
@@ -91,7 +95,6 @@ const SignUpPage = () => {
 
         <form onSubmit={handleSubmit(onSubmit)} className="p-8 space-y-5">
           
-          {/* İsim Alanı */}
           <FormField label="Full Name *" error={errors.name}>
             <input
               {...register("name", {
@@ -103,7 +106,6 @@ const SignUpPage = () => {
             />
           </FormField>
 
-          {/* Email Alanı */}
           <FormField label="Email Address *" error={errors.email}>
             <input
               type="email"
@@ -116,7 +118,6 @@ const SignUpPage = () => {
             />
           </FormField>
 
-          {/* Şifre Alanları */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <FormField label="Password *" error={errors.password}>
               <input
@@ -125,7 +126,7 @@ const SignUpPage = () => {
                   required: "Password is required",
                   pattern: {
                     value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.])[A-Za-z\d@$!%*?&.]{8,}$/,
-                    message: "Too weak"
+                    message: "The password must be at least 8 characters long and include one uppercase letter, one lowercase letter, one number, and one special character."
                   }
                 })}
                 className="w-full px-4 py-3 rounded-lg border border-[#E6E6E6] bg-[#F9F9F9] focus:border-[#23A6F0] outline-none"
@@ -144,7 +145,6 @@ const SignUpPage = () => {
             </FormField>
           </div>
 
-          {/* Rol Seçimi */}
           <FormField label="Who are you?">
             <select 
               {...register("role_id")} 
@@ -156,7 +156,6 @@ const SignUpPage = () => {
             </select>
           </FormField>
 
-          {/* Store Özel Alanlar */}
           {selectedRole === "2" && (
             <div className="bg-[#F3F9FE] p-5 rounded-xl border border-[#23A6F0]/20 space-y-4">
               <h3 className="text-[#23A6F0] font-bold text-sm uppercase tracking-wider">Store Details</h3>
@@ -199,7 +198,6 @@ const SignUpPage = () => {
             </div>
           )}
 
-          {/* Button */}
           <button
             type="submit"
             disabled={loading || !isValid}
