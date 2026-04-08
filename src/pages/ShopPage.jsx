@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom'; 
 import ShopHeader from '../components/Shop/ShopHeader';
 import ShopProductList from '../components/Shop/ShopProductList';
 import ShopBrands from '../components/Shop/ShopBrands';
@@ -8,15 +9,17 @@ import { homeData } from '../mocks/data';
 
 const ShopPage = () => {
     const dispatch = useDispatch();
+    const { categoryId } = useParams(); 
     
     const categories = useSelector((state) => state.product.categories);
     const productList = useSelector((state) => state.product.productList);
     const fetchState = useSelector((state) => state.product.fetchState);
     const total = useSelector((state) => state.product.total);
 
+    const [filter, setFilter] = useState('');
+    const [sort, setSort] = useState('');
     const [activePage, setActivePage] = useState(1);
     const [viewMode, setViewMode] = useState('grid');
-    
     const [limit, setLimit] = useState(window.innerWidth < 768 ? 4 : 12);
 
     useEffect(() => {
@@ -27,16 +30,26 @@ const ShopPage = () => {
                 setActivePage(1); 
             }
         };
-
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, [limit]);
 
     useEffect(() => {
         const offset = (activePage - 1) * limit;
-        dispatch(fetchProducts({ limit, offset }));
+        
+        const queryParams = { limit, offset };
+        
+        if (categoryId) queryParams.category = categoryId;
+        if (filter) queryParams.filter = filter;
+        if (sort) queryParams.sort = sort;
+
+        dispatch(fetchProducts(queryParams));
         window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, [dispatch, activePage, limit]);
+    }, [dispatch, activePage, limit, categoryId, filter, sort]);
+
+    useEffect(() => {
+        setActivePage(1);
+    }, [categoryId, filter, sort]);
 
     const topCategories = useMemo(() => {
         if (!categories || categories.length === 0) return [];
@@ -62,6 +75,8 @@ const ShopPage = () => {
                         setActivePage={setActivePage}
                         total={total}
                         limit={limit}
+                        setFilter={setFilter}
+                        setSort={setSort}
                     />
                 )}
 

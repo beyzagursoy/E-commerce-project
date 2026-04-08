@@ -1,19 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { LayoutGrid, List } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-const ShopProductList = ({ products, viewMode, setViewMode, activePage, setActivePage, total, limit }) => {
+const ShopProductList = ({ 
+    products, 
+    viewMode, 
+    setViewMode, 
+    activePage, 
+    setActivePage, 
+    total, 
+    limit,
+    setFilter,
+    setSort 
+}) => {
     
+    const [localFilter, setLocalFilter] = useState("");
+    const [localSort, setLocalSort] = useState("");
+
     if (!products || !Array.isArray(products)) return null;
 
     const startRange = (activePage - 1) * limit + 1;
     const endRange = Math.min(activePage * limit, total);
     const pageCount = Math.ceil(total / limit) || 1;
 
+    const handleApplyFilters = (e) => {
+        e.preventDefault();
+        setFilter(localFilter);
+        setSort(localSort);
+    };
+
     const getPaginationItems = () => {
         const items = [];
         const threshold = 1; 
-
         for (let i = 1; i <= pageCount; i++) {
             if (i === 1 || i === pageCount || (i >= activePage - threshold && i <= activePage + threshold)) {
                 items.push(i);
@@ -28,7 +46,7 @@ const ShopProductList = ({ products, viewMode, setViewMode, activePage, setActiv
         <section className="py-12 px-4 md:px-8 lg:px-0">
             <div className="max-w-[1050px] mx-auto">
                 
-                {/* 1. FILTER BAR */}
+                {/* 1. FILTER & SEARCH BAR */}
                 <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-12">
                     <p className="text-[#737373] font-bold text-sm text-center md:text-left">
                         {total > 0 
@@ -48,14 +66,33 @@ const ShopProductList = ({ products, viewMode, setViewMode, activePage, setActiv
                         </div>
                     </div>
 
-                    <div className="flex items-center gap-4 w-full md:w-auto">
-                        <select className="flex-1 md:flex-none bg-[#F9F9F9] border border-[#DDDDDD] text-[#737373] py-3.5 px-5 rounded-[5px] text-sm">
-                            <option>Popularity</option>
-                            <option>Price: Low to High</option>
-                            <option>Price: High to Low</option>
+                    {/* ARAMA VE SIRALAMA FORMU */}
+                    <form onSubmit={handleApplyFilters} className="flex flex-col md:flex-row items-center gap-4 w-full md:w-auto">
+                        <input 
+                            type="text"
+                            placeholder="Filter products..."
+                            className="bg-[#F9F9F9] border border-[#DDDDDD] text-[#737373] py-3.5 px-5 rounded-[5px] text-sm w-full md:w-40 focus:outline-[#23A6F0]"
+                            value={localFilter}
+                            onChange={(e) => setLocalFilter(e.target.value)}
+                        />
+                        <select 
+                            className="bg-[#F9F9F9] border border-[#DDDDDD] text-[#737373] py-3.5 px-5 rounded-[5px] text-sm cursor-pointer focus:outline-none"
+                            value={localSort}
+                            onChange={(e) => setLocalSort(e.target.value)}
+                        >
+                            <option value="">Sort By</option>
+                            <option value="price:asc">Price: Low to High</option>
+                            <option value="price:desc">Price: High to Low</option>
+                            <option value="rating:asc">Rating: Low to High</option>
+                            <option value="rating:desc">Rating: High to Low</option>
                         </select>
-                        <button className="bg-[#23A6F0] text-white px-10 py-3.5 rounded-[5px] font-bold text-sm">Filter</button>
-                    </div>
+                        <button 
+                            type="submit"
+                            className="bg-[#23A6F0] text-white px-10 py-3.5 rounded-[5px] font-bold text-sm hover:bg-[#1a8cd1] transition-colors"
+                        >
+                            Filter
+                        </button>
+                    </form>
                 </div>
 
                 {/* 2. PRODUCT GRID */}
