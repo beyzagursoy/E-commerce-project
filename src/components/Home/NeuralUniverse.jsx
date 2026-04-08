@@ -1,5 +1,5 @@
 import React from 'react';
-import { homeData } from '../mocks/data';
+import { homeData } from './../../mocks/data';
 
 const NeuralUniverse = () => {
   const item = homeData.cart[0];

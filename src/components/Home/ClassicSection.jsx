@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { homeData } from '../mocks/data';
+import { homeData } from './../../mocks/data';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 export default function ClassicSection() {

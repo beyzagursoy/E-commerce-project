@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Star, Heart, ShoppingCart, Eye, CheckCircle } from 'lucide-react';
 import { useDispatch } from 'react-redux';
-import { addToCart } from '../store/actions/shoppingCartActions'; 
+import { addToCart } from '../../store/actions/shoppingCartActions';
 
 const ProductDetailInfo = ({ product }) => {
     const dispatch = useDispatch();
@@ -13,7 +13,7 @@ const ProductDetailInfo = ({ product }) => {
 
     const handleAddToCart = () => {
         dispatch(addToCart(product));
-        
+
         setIsAdded(true);
         console.log("Sepete eklenen ürün:", product);
 
@@ -27,10 +27,10 @@ const ProductDetailInfo = ({ product }) => {
             <div className="flex items-center gap-2">
                 <div className="flex text-[#F3CD03]">
                     {[...Array(5)].map((_, i) => (
-                        <Star 
-                            key={i} 
-                            size={18} 
-                            fill={i < Math.floor(product.rating || 4) ? "currentColor" : "none"} 
+                        <Star
+                            key={i}
+                            size={18}
+                            fill={i < Math.floor(product.rating || 4) ? "currentColor" : "none"}
                         />
                     ))}
                 </div>
@@ -67,21 +67,20 @@ const ProductDetailInfo = ({ product }) => {
                 <button className="bg-[#23A6F0] text-white px-6 py-3 rounded-md font-bold text-sm hover:bg-[#1a8cd1] transition-all active:scale-95">
                     Select Options
                 </button>
-                
+
                 <div className="flex gap-2">
                     <button className="p-3 border rounded-full bg-white hover:bg-gray-50 transition-colors group">
                         <Heart size={20} className="text-[#252B42] group-hover:text-[#E74C3C] transition-colors" />
                     </button>
 
                     {/* SEPETE EKLE BUTONU */}
-                    <button 
+                    <button
                         onClick={handleAddToCart}
                         disabled={product.stock <= 0}
-                        className={`p-3 border rounded-full transition-all active:scale-95 flex items-center justify-center ${
-                            isAdded 
-                            ? "bg-[#2DC071] border-[#2DC071] text-white" 
-                            : "bg-white border-[#E8E8E8] text-[#252B42] hover:bg-gray-50"
-                        } ${product.stock <= 0 ? "opacity-50 cursor-not-allowed" : ""}`}
+                        className={`p-3 border rounded-full transition-all active:scale-95 flex items-center justify-center ${isAdded
+                                ? "bg-[#2DC071] border-[#2DC071] text-white"
+                                : "bg-white border-[#E8E8E8] text-[#252B42] hover:bg-gray-50"
+                            } ${product.stock <= 0 ? "opacity-50 cursor-not-allowed" : ""}`}
                     >
                         {isAdded ? (
                             <CheckCircle size={20} className="animate-in zoom-in duration-300" />
@@ -95,7 +94,7 @@ const ProductDetailInfo = ({ product }) => {
                     </button>
                 </div>
             </div>
-            
+
             {isAdded && (
                 <p className="text-[#2DC071] text-xs font-bold animate-bounce absolute">
                     Product added to your cart!

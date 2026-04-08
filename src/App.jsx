@@ -1,4 +1,11 @@
 import { Switch, Route } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+import { verifyToken } from './store/actions/clientActions';
+
 import Header from './layout/Header';
 import Footer from './layout/Footer';
 import PageContent from './layout/PageContent'; 
@@ -9,39 +16,15 @@ import ContactPage from './pages/ContactPage';
 import TeamPage from './pages/TeamPage';
 import AboutPage from './pages/AboutPage';
 import SignUpPage from './pages/SignUpPage';
+import LoginPage from './pages/LoginPage';
 import PricingPage from './pages/PricingPage';
 import BlogPage from './pages/BlogPage';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import LoginPage from './pages/LoginPage';
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { API } from './api/api';
-import { setUser } from './store/actions/clientActions';
-import { toast } from 'react-toastify';
 
 function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    
-    if (token) {
-      API.get('/verify', {
-        headers: {
-          Authorization: token
-        }
-      })
-      .then(res => {
-        dispatch(setUser(res.data));
-        localStorage.setItem("token", res.data.token);
-      })
-      .catch(err => {
-        console.error("Verify error:", err);
-        localStorage.removeItem("token"); 
-        toast.error("Session expired, please login again.");
-      });
-    }
+    dispatch(verifyToken());
   }, [dispatch]);
 
   return (
@@ -50,59 +33,25 @@ function App() {
 
       <PageContent>
         <Switch> 
-          <Route exact path="/">
-            <HomePage />
-          </Route>
-
-          <Route path="/shop/:productId">
-             <ProductDetail />
-          </Route>
-
-          <Route path="/shop">
-             <Shop />
-          </Route>
-
-          <Route path="/contact">
-             <ContactPage />
-          </Route>
-
-          <Route path="/about">
-             <AboutPage />
-          </Route>
-
-          <Route path="/team">
-             <TeamPage />
-          </Route>
-
-          <Route path="/blog">
-             <BlogPage />
-          </Route>
-
-          <Route path="/pricing">
-             <PricingPage />
-          </Route>
-
-          <Route path="/signup">
-             <SignUpPage />
-          </Route>
-
-          <Route path="/login">
-             <LoginPage />
-          </Route>
+          <Route exact path="/" component={HomePage} />
+          <Route path="/shop/:productId" component={ProductDetail} />
+          <Route path="/shop" component={Shop} />
+  
+          <Route path="/contact" component={ContactPage} />
+          <Route path="/about" component={AboutPage} />
+          <Route path="/team" component={TeamPage} />
+          <Route path="/blog" component={BlogPage} />
+          <Route path="/pricing" component={PricingPage} />
+          <Route path="/signup" component={SignUpPage} />
+          <Route path="/login" component={LoginPage} />
         </Switch>
       </PageContent>
 
       <Footer />
+      
       <ToastContainer 
         position="bottom-right" 
-        autoClose={5000} 
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
+        autoClose={3000} 
         theme="colored"
       />
     </div>

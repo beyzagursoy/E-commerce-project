@@ -1,6 +1,6 @@
 import React from 'react';
 import { blogData } from '../mocks/data';
-import BlogCard from '../components/BlogCard';
+import BlogCard from '../components/Blog/BlogCard';
 
 const BlogPage = () => {
   return (

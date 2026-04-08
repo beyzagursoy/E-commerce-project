@@ -1,6 +1,7 @@
 import { API } from '../../api/api';
 import { toast } from 'react-toastify';
-// 1. Temel Action Creator
+
+// 1. Temel Action Creator'lar
 export const setUser = (user) => ({ type: "SET_USER", payload: user });
 export const setRoles = (roles) => ({ type: "SET_ROLES", payload: roles });
 export const setTheme = (theme) => ({ type: "SET_THEME", payload: theme });
@@ -28,6 +29,8 @@ export const loginUser = (credentials, history, rememberMe) => (dispatch) => {
       const user = res.data;
       dispatch(setUser(user));
 
+      API.defaults.headers.common["Authorization"] = user.token;
+
       if (rememberMe) {
         localStorage.setItem("token", user.token);
       } else {
@@ -43,7 +46,30 @@ export const loginUser = (credentials, history, rememberMe) => (dispatch) => {
       }
     })
     .catch(err => {
-      toast.error("Login failed!");
+      toast.error("Login failed! Please check your credentials.");
       console.error(err);
     });
+};
+
+// 4. Verify Thunk Action (Auto-Login)
+export const verifyToken = () => (dispatch) => {
+  const token = localStorage.getItem("token");
+
+  if (token) {
+    API.defaults.headers.common["Authorization"] = token;
+
+    return API.get('/verify')
+      .then(res => {
+        const user = res.data;
+        dispatch(setUser(user));
+        
+        localStorage.setItem("token", user.token);
+        API.defaults.headers.common["Authorization"] = user.token;
+      })
+      .catch(err => {
+        console.error("Verify error:", err);
+        localStorage.removeItem("token"); 
+        delete API.defaults.headers.common["Authorization"];
+      });
+  }
 };

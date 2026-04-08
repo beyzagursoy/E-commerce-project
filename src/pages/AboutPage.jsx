@@ -6,8 +6,8 @@ import AboutHero from '../components/About/AboutHero';
 import AboutStats from '../components/About/AboutStats';
 import AboutVideo from '../components/About/AboutVideo';
 import AboutWorkWithUs from '../components/About/AboutWorkWithUs';
-import ShopBrands from '../components/ShopBrands';
-import TeamMemberCard from '../components/TeamMemberCard';
+import ShopBrands from '../components/Shop/ShopBrands';
+import TeamMemberCard from '../components/Team/TeamMemberCard';
 
 const AboutPage = () => {
     const { aboutData, team, shop } = homeData;

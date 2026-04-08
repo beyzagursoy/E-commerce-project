@@ -1,5 +1,5 @@
 import React from 'react';
-import { homeData } from '../mocks/data';
+import { homeData } from '../../mocks/data';
 import ProductCard from './ProductCard';
 
 export default function Bestseller({ showFullHeader = true }) {

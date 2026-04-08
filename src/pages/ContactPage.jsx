@@ -2,9 +2,9 @@ import React from 'react';
 import { homeData } from '../mocks/data';
 import contactarrow from '../assets/images/contact-arrow.png'; 
 
-import ContactHero from '../components/ContactHero';
-import ContactOfficeCards from '../components/ContactOfficeCards';
-import ContactCTA from '../components/ContactCTA';
+import ContactHero from '../components/Contact/ContactHero';
+import ContactOfficeCards from '../components/Contact/ContactOfficeCards';
+import ContactCTA from '../components/Contact/ContactCTA';
 
 const ContactPage = () => {
     const contactImg = homeData.contactImg || homeData.shop.categories[1].img;

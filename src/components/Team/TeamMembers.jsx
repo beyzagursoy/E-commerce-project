@@ -1,5 +1,5 @@
 import React from 'react';
-import TeamMemberCard from '../components/TeamMemberCard';
+import TeamMemberCard from './TeamMemberCard';
 
 const TeamMembers = ({ title, subtitle, members }) => {
     return (

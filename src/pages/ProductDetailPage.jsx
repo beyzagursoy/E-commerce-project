@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { ChevronRight } from 'lucide-react';
-import { fetchProducts } from '../store/actions/productActions'; 
+import { fetchProducts } from '../store/actions/productActions';
 import { homeData } from '../mocks/data';
-import ProductDetailSlider from '../components/ProductDetailSlider';
-import ProductDetailInfo from '../components/ProductDetailInfo';
-import ProductDetailTabs from '../components/ProductDetailTabs';
-import Bestseller from '../components/Bestseller';
-import ShopBrands from '../components/ShopBrands';
+import ProductDetailSlider from '../components/ProductDetail/ProductDetailSlider';
+import ProductDetailInfo from '../components/ProductDetail/ProductDetailInfo';
+import ProductDetailTabs from '../components/ProductDetail/ProductDetailTabs';
+import Bestseller from '../components/Home/Bestseller';
+import ShopBrands from '../components/Shop/ShopBrands';
 
 const ProductDetailPage = () => {
     const { productId } = useParams();
@@ -38,8 +38,8 @@ const ProductDetailPage = () => {
         );
     }
 
-    const sliderImages = product.images && product.images.length > 0 
-        ? product.images 
+    const sliderImages = product.images && product.images.length > 0
+        ? product.images
         : [{ url: product.image }];
 
     const nextSlide = () => {
@@ -66,8 +66,8 @@ const ProductDetailPage = () => {
             {/* 2. ANA ÜRÜN BÖLÜMÜ */}
             <section className="max-w-[1050px] mx-auto pb-12 px-8">
                 <div className="flex flex-col md:flex-row gap-12">
-                    <ProductDetailSlider 
-                        images={sliderImages} 
+                    <ProductDetailSlider
+                        images={sliderImages}
                         currentSlide={currentSlide}
                         setCurrentSlide={setCurrentSlide}
                         nextSlide={nextSlide}
@@ -79,11 +79,11 @@ const ProductDetailPage = () => {
             </section>
 
             {/* 3. TABLAR (Açıklama vb.) */}
-            <ProductDetailTabs 
-                activeTab={activeTab} 
-                setActiveTab={setActiveTab} 
+            <ProductDetailTabs
+                activeTab={activeTab}
+                setActiveTab={setActiveTab}
                 product={product}
-                categoryImg={product.images?.[0]?.url || product.image} 
+                categoryImg={product.images?.[0]?.url || product.image}
             />
 
             {/* 4. DİĞER ÜRÜNLER VE MARKALAR */}

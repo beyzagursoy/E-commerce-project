@@ -1,8 +1,8 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import ShopHeader from '../components/ShopHeader';
-import ShopProductList from '../components/ShopProductList';
-import ShopBrands from '../components/ShopBrands';
+import ShopHeader from '../components/Shop/ShopHeader';
+import ShopProductList from '../components/Shop/ShopProductList';
+import ShopBrands from '../components/Shop/ShopBrands';
 import { fetchProducts } from '../store/actions/productActions';
 import { homeData } from '../mocks/data';
 
@@ -11,21 +11,21 @@ const ShopPage = () => {
     const categories = useSelector((state) => state.product.categories);
     const productList = useSelector((state) => state.product.productList);
     const fetchState = useSelector((state) => state.product.fetchState);
-    const total = useSelector((state) => state.product.total); 
-    
+    const total = useSelector((state) => state.product.total);
+
     const [activePage, setActivePage] = useState(1);
     const [viewMode, setViewMode] = useState('grid');
-    const limit = 12; 
+    const limit = 12;
     useEffect(() => {
         const offset = (activePage - 1) * limit;
-        
-        dispatch(fetchProducts({ 
-            limit: limit, 
-            offset: offset 
+
+        dispatch(fetchProducts({
+            limit: limit,
+            offset: offset
         }));
 
         window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, [dispatch, activePage]); 
+    }, [dispatch, activePage]);
 
     const topCategories = useMemo(() => {
         if (!categories || categories.length === 0) return [];
@@ -35,7 +35,7 @@ const ShopPage = () => {
     return (
         <div className="font-montserrat min-h-screen bg-white">
             <ShopHeader categories={topCategories} />
-            
+
             <div className="container mx-auto px-4">
                 {fetchState === "FETCHING" ? (
                     <div className="flex flex-col items-center justify-center py-20 gap-4">
@@ -44,17 +44,17 @@ const ShopPage = () => {
                     </div>
                 ) : (
                     <ShopProductList
-                        products={productList} 
-                        viewMode={viewMode} 
+                        products={productList}
+                        viewMode={viewMode}
                         setViewMode={setViewMode}
                         activePage={activePage}
                         setActivePage={setActivePage}
-                        total={total} 
+                        total={total}
                         limit={limit}
                     />
                 )}
             </div>
-            
+
             <ShopBrands brands={homeData.shop.brands} />
         </div>
     );
