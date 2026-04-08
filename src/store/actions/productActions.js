@@ -33,13 +33,13 @@ export const fetchCategories = () => {
 
 export const fetchProducts = (params = {}) => {
   return (dispatch) => {
-    dispatch(setFetchState('FETCHING'));
+    dispatch(setFetchState('FETCHING')); 
 
     API.get('/products', { params })
       .then(res => {
-        dispatch(setProductList(res.data.products));
-        dispatch(setTotal(res.data.total));
-        dispatch(setFetchState('FETCHED'));
+        dispatch(setProductList(res.data.products)); 
+        dispatch(setTotal(res.data.total)); 
+        dispatch(setFetchState('FETCHED')); 
       })
       .catch(err => {
         console.error("Ürün listesi yüklenirken hata oluştu:", err);

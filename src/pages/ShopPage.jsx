@@ -8,6 +8,7 @@ import { homeData } from '../mocks/data';
 
 const ShopPage = () => {
     const dispatch = useDispatch();
+    
     const categories = useSelector((state) => state.product.categories);
     const productList = useSelector((state) => state.product.productList);
     const fetchState = useSelector((state) => state.product.fetchState);
@@ -15,17 +16,27 @@ const ShopPage = () => {
 
     const [activePage, setActivePage] = useState(1);
     const [viewMode, setViewMode] = useState('grid');
-    const limit = 12;
+    
+    const [limit, setLimit] = useState(window.innerWidth < 768 ? 4 : 12);
+
+    useEffect(() => {
+        const handleResize = () => {
+            const newLimit = window.innerWidth < 768 ? 4 : 12;
+            if (newLimit !== limit) {
+                setLimit(newLimit);
+                setActivePage(1); 
+            }
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, [limit]);
+
     useEffect(() => {
         const offset = (activePage - 1) * limit;
-
-        dispatch(fetchProducts({
-            limit: limit,
-            offset: offset
-        }));
-
+        dispatch(fetchProducts({ limit, offset }));
         window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, [dispatch, activePage]);
+    }, [dispatch, activePage, limit]);
 
     const topCategories = useMemo(() => {
         if (!categories || categories.length === 0) return [];
@@ -38,9 +49,9 @@ const ShopPage = () => {
 
             <div className="container mx-auto px-4">
                 {fetchState === "FETCHING" ? (
-                    <div className="flex flex-col items-center justify-center py-20 gap-4">
-                        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#23A6F0]"></div>
-                        <p className="text-[#737373] font-medium">Loading Page {activePage}...</p>
+                    <div className="flex flex-col items-center justify-center py-32 gap-4">
+                        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-[#23A6F0]"></div>
+                        <p className="text-[#737373] font-bold text-lg animate-pulse">Loading products...</p>
                     </div>
                 ) : (
                     <ShopProductList
@@ -52,6 +63,12 @@ const ShopPage = () => {
                         total={total}
                         limit={limit}
                     />
+                )}
+
+                {fetchState === "FAILED" && (
+                    <div className="text-center py-20 text-red-500 font-bold">
+                        Failed to load products. Please refresh the page.
+                    </div>
                 )}
             </div>
 
