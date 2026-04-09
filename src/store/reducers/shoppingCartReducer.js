@@ -60,6 +60,24 @@ export const shoppingCartReducer = (state = initialState, action) => {
     case 'CLEAR_CART':
       return initialState;
 
+    case 'TOGGLE_CHECK':
+      return {
+        ...state,
+        cart: state.cart.map(item =>
+          item.product.id === action.payload ? { ...item, checked: !item.checked } : item
+        )
+      };
+
+    case 'UPDATE_COUNT':
+      return {
+        ...state,
+        cart: state.cart.map(item =>
+          item.product.id === action.payload.id
+            ? { ...item, count: Math.max(1, action.payload.count) } 
+            : item
+        )
+      };
+
     default:
       return state;
   }

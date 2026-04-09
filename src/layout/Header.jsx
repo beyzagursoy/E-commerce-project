@@ -219,32 +219,65 @@ export default function Header() {
             <div className="relative group flex items-center gap-1 cursor-pointer">
               <Link to="/cart" className="flex items-center gap-1 hover:opacity-80">
                 <ShoppingCart size={24} />
-                <span className="text-xs bg-[#23A6F0] text-white rounded-full w-5 h-5 flex items-center justify-center -mt-3 -ml-2">{totalItems}</span>
+                <span className="text-xs bg-[#23A6F0] text-white rounded-full w-5 h-5 flex items-center justify-center -mt-3 -ml-2 font-bold">
+                  {totalItems}
+                </span>
               </Link>
 
-              {cart.length > 0 && (
-                <div className="absolute top-full right-0 w-80 bg-white shadow-2xl border border-[#BDBDBD] rounded-lg p-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[110] text-[#252B42]">
-                  <h3 className="font-bold border-b pb-2 mb-3 text-sm">Sepetim ({totalItems} Ürün)</h3>
-                  <div className="max-h-80 overflow-y-auto space-y-4 pr-2 scrollbar-thin">
-                    {cart.map((item, idx) => (
-                      <div key={idx} className="flex gap-3 items-center border-b border-gray-50 pb-3 last:border-0">
-                        <img src={item.product.images?.[0]?.url || item.product.image} alt={item.product.name} className="w-14 h-18 object-cover rounded shadow-sm" />
-                        <div className="flex-1">
-                          <p className="text-[11px] font-bold line-clamp-2 leading-tight">{item.product.name}</p>
-                          <div className="flex justify-between items-center mt-2">
-                            <p className="text-xs text-[#737373]">Adet: {item.count}</p>
-                            <p className="text-xs text-[#23A6F0] font-extrabold">${(item.product.price * item.count).toFixed(2)}</p>
+              {/* Dropdown Menü */}
+              <div className="absolute top-full right-0 w-80 bg-white shadow-2xl border border-gray-100 rounded-xl p-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[110] text-[#252B42] mt-2">
+
+                <h3 className="font-bold border-b border-gray-50 pb-3 mb-3 text-sm">
+                  Sepetim ({totalItems} Ürün)
+                </h3>
+
+                <div className="max-h-80 overflow-y-auto space-y-0 pr-2 custom-scrollbar">
+                  {cart.length > 0 ? (
+                    cart.map((item, idx) => (
+                      <div key={idx} className="flex gap-4 items-center border-b border-gray-50 py-4 last:border-0">
+                        <img
+                          src={item.product.images?.[0]?.url || item.product.image}
+                          alt={item.product.name}
+                          className="w-16 h-20 object-cover rounded-lg border border-gray-50 shadow-sm"
+                        />
+
+                        <div className="flex-1 flex flex-col justify-between h-20">
+                          <div>
+                            <p className="text-[12px] font-bold line-clamp-2 leading-tight text-[#252B42]">
+                              {item.product.name}
+                            </p>
+                            <p className="text-[11px] text-[#737373] mt-1">
+                              Adet: {item.count}
+                            </p>
                           </div>
+                          <p className="text-sm text-[#23A6F0] font-black tracking-tight">
+                            ${(item.product.price * item.count).toFixed(2)}
+                          </p>
                         </div>
                       </div>
-                    ))}
-                  </div>
-                  <div className="pt-4 flex gap-2 border-t mt-2">
-                    <Link to="/cart" className="flex-1 text-center border border-[#23A6F0] text-[#23A6F0] py-2 rounded font-bold text-xs hover:bg-blue-50 transition-colors">Sepete Git</Link>
-                    <button className="flex-1 text-center bg-[#23A6F0] text-white py-2 rounded font-bold text-xs hover:bg-[#1a8cd3] transition-colors shadow-md">Siparişi Tamamla</button>
-                  </div>
+                    ))
+                  ) : (
+                    <div className="py-6 text-center text-[#737373] text-sm">
+                      Sepetiniz şu an boş.
+                    </div>
+                  )}
                 </div>
-              )}
+
+                {/* Butonlar Bölümü */}
+                <div className="pt-4 flex gap-3 border-t border-gray-100 mt-2">
+                  <Link
+                    to="/cart"
+                    className="flex-1 text-center border border-[#23A6F0] text-[#23A6F0] py-2.5 rounded-lg font-bold text-xs hover:bg-blue-50 transition-all"
+                  >
+                    Sepete Git
+                  </Link>
+                  <button
+                    className="flex-1 text-center bg-[#23A6F0] text-white py-2.5 rounded-lg font-bold text-xs hover:bg-[#1a8cd3] transition-all shadow-md active:scale-95"
+                  >
+                    Siparişi Tamamla
+                  </button>
+                </div>
+              </div>
             </div>
 
             <div className="flex items-center gap-1 cursor-pointer hover:opacity-80">

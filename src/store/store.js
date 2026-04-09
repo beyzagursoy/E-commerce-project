@@ -14,7 +14,36 @@ const rootReducer = combineReducers({
 
 const logger = createLogger();
 
+const loadFromLocalStorage = () => {
+  try {
+    const serializedCart = localStorage.getItem('cart');
+    if (serializedCart === null) return undefined;
+    return {
+      shoppingCart: {
+        cart: JSON.parse(serializedCart)
+      }
+    };
+  } catch  {
+    return undefined;
+  }
+};
+const saveToLocalStorage = (state) => {
+  try {
+    const serializedCart = JSON.stringify(state.shoppingCart.cart);
+    localStorage.setItem('cart', serializedCart);
+  } catch (err) {
+    console.error("Sepet kaydedilemedi:", err);
+  }
+};
+
+const persistedState = loadFromLocalStorage();
+
 export const store = createStore(
   rootReducer, 
+  persistedState, 
   applyMiddleware(thunk, logger)
 );
+
+store.subscribe(() => {
+  saveToLocalStorage(store.getState());
+});

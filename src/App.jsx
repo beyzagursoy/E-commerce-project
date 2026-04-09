@@ -19,6 +19,7 @@ import SignUpPage from './pages/SignUpPage';
 import LoginPage from './pages/LoginPage';
 import PricingPage from './pages/PricingPage';
 import BlogPage from './pages/BlogPage';
+import ShoppingCartPage from './pages/ShoppingCartPage';
 
 function App() {
   const dispatch = useDispatch();
@@ -46,6 +47,7 @@ function App() {
           <Route path="/pricing" component={PricingPage} />
           <Route path="/signup" component={SignUpPage} />
           <Route path="/login" component={LoginPage} />
+          <Route path="/cart" component={ShoppingCartPage} />
         </Switch>
       </PageContent>
 
