@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom'; 
+
 import { axiosWithAuth } from '../api/api';
-import { Plus, Edit2, Trash2, Info } from 'lucide-react';
+import { Plus, Edit2, Trash2, Info, ChevronRight } from 'lucide-react'; 
 import AddressForm from './AddressForm';
 
-export default function AddressStep() {
+export default function AddressStep({ onNext }) {
     const [addresses, setAddresses] = useState([]);
     const [selectedShippingAddress, setSelectedShippingAddress] = useState(null);
     const [selectedBillingAddress, setSelectedBillingAddress] = useState(null);
@@ -14,7 +15,6 @@ export default function AddressStep() {
     
     const history = useHistory();
 
-    // 1. Protected Route Kontrol
     useEffect(() => {
         const token = localStorage.getItem("token");
         if (!token) {
@@ -24,13 +24,11 @@ export default function AddressStep() {
         fetchAddresses();
     }, [history]);
 
-    // 2. Adres Getir (GET /user/address)
     const fetchAddresses = () => {
         axiosWithAuth()
             .get('/user/address')
             .then(res => {
                 setAddresses(res.data);
-                // İlk açılışta varsa ilk adresi seçili yap
                 if (res.data.length > 0 && !selectedShippingAddress) {
                     setSelectedShippingAddress(res.data[0].id);
                     setSelectedBillingAddress(res.data[0].id);
@@ -39,7 +37,6 @@ export default function AddressStep() {
             .catch(err => console.error("Adresler çekilemedi:", err));
     };
 
-    // 3. Adres Sil (DELETE /user/address/:id)
     const handleDelete = (e, id) => {
         e.stopPropagation();
         if (window.confirm("Bu adresi silmek istediğinize emin misiniz?")) {
@@ -50,15 +47,28 @@ export default function AddressStep() {
         }
     };
 
-    // 4. Adres Düzenle
     const handleEdit = (e, addr) => {
         e.stopPropagation();
         setEditingAddress(addr);
         setIsFormOpen(true);
     };
 
+    const handleContinue = () => {
+        if (!selectedShippingAddress) {
+            alert("Lütfen bir teslimat adresi seçin.");
+            return;
+        }
+        if (onNext) {
+            onNext({
+                shippingAddressId: selectedShippingAddress,
+                billingAddressId: isBillingSame ? selectedShippingAddress : selectedBillingAddress
+            });
+        }
+    };
+
     return (
-        <div className="flex flex-col gap-6 animate-in fade-in duration-500">
+        <div className="flex flex-col gap-6 animate-in fade-in duration-500 pb-10">
+            {/* Header Steps */}
             <div className="flex border rounded-2xl overflow-hidden bg-white shadow-sm">
                 <div className="flex-1 p-5 border-b-4 border-[#23A6F0] bg-blue-50/20">
                     <h3 className="font-bold text-[#23A6F0] text-lg">1. Adres Bilgileri</h3>
@@ -89,9 +99,7 @@ export default function AddressStep() {
                 </label>
             </div>
 
-            {/* Teslimat Adresi Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                {/* Yeni Adres Ekle Kartı */}
                 <div
                     onClick={() => { setEditingAddress(null); setIsFormOpen(true); }}
                     className="h-[180px] border-2 border-dashed border-gray-200 rounded-[32px] flex flex-col items-center justify-center gap-2 text-gray-400 hover:border-[#23A6F0] hover:text-[#23A6F0] transition-all bg-white cursor-pointer group shadow-sm"
@@ -102,7 +110,6 @@ export default function AddressStep() {
                     <span className="font-bold text-sm">Yeni Adres Ekle</span>
                 </div>
 
-                {/* Kayıtlı Adresler */}
                 {addresses.map((addr) => (
                     <div
                         key={addr.id}
@@ -134,14 +141,12 @@ export default function AddressStep() {
                         <div className="space-y-1">
                             <p className="text-sm font-bold text-gray-800">{addr.name} {addr.surname}</p>
                             <p className="text-[11px] text-gray-500 font-medium">{addr.phone}</p>
-                            <p className="text-xs text-gray-400 line-clamp-2">{addr.neighborhood}</p>
                             <p className="text-xs text-gray-700 font-bold">{addr.city} / {addr.district}</p>
                         </div>
                     </div>
                 ))}
             </div>
 
-            {/* Fatura Adresi  */}
             {!isBillingSame && (
                 <div className="mt-8 space-y-4">
                     <h2 className="text-xl font-bold text-[#252B42]">Fatura Adresi</h2>
@@ -166,7 +171,6 @@ export default function AddressStep() {
                                 </div>
                                 <div className="space-y-1 mt-4">
                                     <p className="text-sm font-bold text-gray-800">{addr.name} {addr.surname}</p>
-                                    <p className="text-xs text-gray-400">{addr.neighborhood}</p>
                                     <p className="text-xs text-gray-700 font-bold">{addr.city} / {addr.district}</p>
                                 </div>
                             </div>
@@ -175,7 +179,6 @@ export default function AddressStep() {
                 </div>
             )}
 
-            {/* Adres Form Modalı */}
             {isFormOpen && (
                 <AddressForm 
                     onClose={() => { setIsFormOpen(false); setEditingAddress(null); }} 

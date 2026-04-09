@@ -271,11 +271,12 @@ export default function Header() {
                   >
                     Sepete Git
                   </Link>
-                  <button
+                  <Link
+                    to="/order"
                     className="flex-1 text-center bg-[#23A6F0] text-white py-2.5 rounded-lg font-bold text-xs hover:bg-[#1a8cd3] transition-all shadow-md active:scale-95"
                   >
                     Siparişi Tamamla
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>

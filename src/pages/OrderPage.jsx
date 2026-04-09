@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { ChevronRight, Info, PlusCircle } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 import AddressStep from '../components/AddressStep';
+import PaymentStep from '../components/PaymentStep';
 
 export default function OrderPage() {
     const [step, setStep] = useState(1);
+    const [isAgreed, setIsAgreed] = useState(false); 
     const cart = useSelector((state) => state.shoppingCart.cart);
 
     const productsTotal = cart
@@ -15,50 +17,58 @@ export default function OrderPage() {
     const freeShippingThreshold = 150;
     const shippingDiscount = productsTotal >= freeShippingThreshold ? shippingFee : 0;
     const couponDiscount = productsTotal > 0 ? 10 : 0; 
-
     const grandTotal = Math.max(0, productsTotal + shippingFee - shippingDiscount - couponDiscount);
+
+    const handleAction = () => {
+        if (step === 1) {
+            setStep(2);
+        } else {
+            if (isAgreed) {
+                alert("Siparişiniz başarıyla alındı!");
+            }
+        }
+    };
 
     return (
         <div className="bg-[#FAFAFA] min-h-screen py-8 px-4 font-montserrat text-[#252B42]">
             <div className="max-w-[1200px] mx-auto flex flex-col lg:flex-row gap-8 items-start">
                 
-                {/* SOL TARAF */}
+                {/* SOL TARAF - Adımlar */}
                 <div className="flex-[2] w-full space-y-6">
                     {step === 1 ? (
                         <AddressStep onNext={() => setStep(2)} />
                     ) : (
-                        <div className="bg-white p-20 text-center rounded-2xl border border-gray-100 shadow-sm flex flex-col items-center gap-4">
-                            <h3 className="text-xl font-bold">2. Ödeme Seçenekleri</h3>
-                            <p className="text-[#737373]">Ödeme formu bu alanda yer alacaktır.</p>
-                            <button 
-                                onClick={() => setStep(1)}
-                                className="text-[#23A6F0] font-bold text-sm hover:underline"
-                            >
-                                Adres Bilgilerine Geri Dön
-                            </button>
-                        </div>
+                        <PaymentStep onPrev={() => setStep(1)} />
                     )}
                 </div>
 
-                {/* SAĞ TARAF */}
+                {/* SAĞ TARAF - Özet ve Kontroller */}
                 <div className="flex-1 lg:sticky lg:top-24 w-full lg:max-w-[350px]">
                     
+                    {/* Üstteki Durum Butonu */}
                     <button
-                        onClick={() => setStep(2)}
-                        disabled={step === 2}
-                        className={`w-full py-4 rounded-xl font-bold text-base shadow-md mb-4 flex items-center justify-center gap-2 transition-all ${
-                            step === 2 ? 'bg-gray-300 cursor-not-allowed text-white' : 'bg-[#23A6F0] text-white hover:bg-[#1a8cd3]'
+                        disabled
+                        className={`w-full py-4 rounded-xl font-bold text-base shadow-sm mb-4 flex items-center justify-center gap-2 transition-all ${
+                            step === 2 ? 'bg-blue-50 text-[#23A6F0]' : 'bg-gray-100 text-gray-400'
                         }`}
                     >
-                        Kaydet ve Devam Et <ChevronRight size={18} />
+                        {step === 1 ? "1. Adres Seçimi" : "2. Ödeme Bilgileri"}
                     </button>
 
-                    {/* Sözleşme Onay Kutusu  */}
-                    <div className="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm flex gap-3 items-start mb-4">
-                        <input type="checkbox" className="mt-1 w-5 h-5 accent-[#23A6F0] cursor-pointer" id="terms" />
+                    {/* Sözleşme Onay Kutusu */}
+                    <div className={`bg-white p-5 rounded-2xl border transition-all mb-4 shadow-sm flex gap-3 items-start ${
+                        step === 2 && !isAgreed ? 'border-orange-200 bg-orange-50/30' : 'border-gray-100'
+                    }`}>
+                        <input 
+                            type="checkbox" 
+                            checked={isAgreed}
+                            onChange={(e) => setIsAgreed(e.target.checked)}
+                            className="mt-1 w-5 h-5 accent-[#23A6F0] cursor-pointer" 
+                            id="terms" 
+                        />
                         <label htmlFor="terms" className="text-[12px] text-gray-500 leading-tight cursor-pointer">
-                            <span className="underline">Ön Bilgilendirme Koşulları</span>'nı ve 
-                            <span className="underline ml-1">Mesafeli Satış Sözleşmesi</span>'ni okudum, onaylıyorum.
+                            <span className="underline font-semibold text-[#252B42]">Ön Bilgilendirme Koşulları</span>'nı ve 
+                            <span className="underline font-semibold text-[#252B42] ml-1">Mesafeli Satış Sözleşmesi</span>'ni okudum, onaylıyorum.
                         </label>
                     </div>
 
@@ -103,16 +113,24 @@ export default function OrderPage() {
                     </div>
 
                     <button
-                        onClick={() => setStep(2)}
-                        disabled={step === 2}
+                        onClick={handleAction}
+                        disabled={step === 2 && !isAgreed} 
                         className={`w-full py-4 rounded-xl font-bold text-base shadow-md mt-4 flex items-center justify-center gap-2 transition-all ${
-                            step === 2 ? 'bg-gray-300 cursor-not-allowed text-white' : 'bg-[#23A6F0] text-white hover:bg-[#1a8cd3]'
+                            (step === 2 && !isAgreed) 
+                            ? 'bg-gray-200 text-gray-400 cursor-not-allowed' 
+                            : 'bg-[#23A6F0] text-white hover:bg-[#1a8cd3] active:scale-[0.98]'
                         }`}
                     >
-                        Kaydet ve Devam Et <ChevronRight size={18} />
+                        {step === 1 ? "Kaydet ve Devam Et" : "Siparişi Tamamla"} 
+                        <ChevronRight size={18} />
                     </button>
+                    
+                    {step === 2 && !isAgreed && (
+                        <p className="text-[10px] text-orange-500 font-bold mt-2 text-center animate-pulse">
+                            * Devam etmek için sözleşmeyi onaylamalısınız.
+                        </p>
+                    )}
                 </div>
-
             </div>
         </div>
     );
