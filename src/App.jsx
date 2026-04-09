@@ -21,6 +21,9 @@ import PricingPage from './pages/PricingPage';
 import BlogPage from './pages/BlogPage';
 import ShoppingCartPage from './pages/ShoppingCartPage';
 
+import ProtectedRoute from './components/ProtectedRoute'; // Yolunu kontrol et
+import OrderPage from './pages/OrderPage'; // Yeni oluşturacağın sipariş sayfası
+
 function App() {
   const dispatch = useDispatch();
 
@@ -48,6 +51,8 @@ function App() {
           <Route path="/signup" component={SignUpPage} />
           <Route path="/login" component={LoginPage} />
           <Route path="/cart" component={ShoppingCartPage} />
+
+          <ProtectedRoute path="/order" component={OrderPage} />
         </Switch>
       </PageContent>
 
