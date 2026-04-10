@@ -79,7 +79,7 @@ const ProductDetailInfo = ({ product }) => {
                         disabled={product.stock <= 0}
                         className={`p-3 border rounded-full transition-all active:scale-95 flex items-center justify-center ${isAdded
                                 ? "bg-[#2DC071] border-[#2DC071] text-white"
-                                : "bg-white border-[#E8E8E8] text-[#252B42] hover:bg-gray-50"
+                                : "bg-white border text-[#252B42] hover:bg-gray-50"
                             } ${product.stock <= 0 ? "opacity-50 cursor-not-allowed" : ""}`}
                     >
                         {isAdded ? (

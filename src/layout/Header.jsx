@@ -48,11 +48,10 @@ export default function Header() {
         <span className="text-sm font-bold text-[#252B42] hidden sm:inline">{user.name}</span>
         <ChevronDown size={14} className="text-[#737373]" />
       </div>
-      
-      {/* DESKTOP DROPDOWN MENU */}
-      <div className="absolute top-full right-0 mt-2 w-48 bg-white shadow-xl border border-gray-100 rounded-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 py-2">
-        <Link 
-          to="/previous-orders" 
+
+      <div className="absolute top-full right-0 mt-2 w-48 bg-white shadow-xl border border-gray-100 rounded-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-[110] py-2">
+        <Link
+          to="/previous-orders"
           className="flex items-center gap-2 px-4 py-3 text-sm text-[#252B42] hover:bg-blue-50 hover:text-[#23A6F0] font-bold border-b border-gray-50"
         >
           <Package size={16} /> Siparişlerim
@@ -68,7 +67,7 @@ export default function Header() {
   );
 
   const AuthLinks = () => (
-    <div className="flex items-center gap-1 text-sm font-bold whitespace-nowrap">
+    <div className="flex items-center gap-1 text-sm font-bold whitespace-nowrap text-[#23A6F0]">
       <User size={18} className="lg:size-6" />
       <Link to="/login" onClick={() => setIsMenuOpen(false)} className="hover:text-[#1d87c4] transition-colors">Login</Link>
       <span className="mx-0.5">/</span>
@@ -77,103 +76,108 @@ export default function Header() {
   );
 
   return (
-    <header className="w-full font-montserrat sticky top-0 z-50 bg-white shadow-sm">
+    <header className="w-full font-montserrat sticky top-0 z-[100] bg-white shadow-sm">
       {/* 1. TOP BAR */}
       <div className="hidden lg:flex bg-[#252B42] text-white py-3 px-8 justify-between items-center w-full">
         <div className="flex gap-6 items-center font-bold text-sm">
           <div className="flex items-center gap-1"><Phone size={16} /> (225) 555-0118</div>
           <div className="flex items-center gap-1"><Mail size={16} /> michelle.rivera@example.com</div>
         </div>
-        <div className="font-bold text-sm tracking-tight">Follow Us and get a chance to win 80% off</div>
+        <div className="font-bold text-sm tracking-tight text-center">Follow Us and get a chance to win 80% off</div>
         <div className="flex items-center gap-3">
           <span className="text-sm font-bold">Follow Us :</span>
           <div className="flex gap-3">
-            <Instagram size={18} className="cursor-pointer hover:scale-110 transition-transform" />
-            <Youtube size={18} className="cursor-pointer hover:scale-110 transition-transform" />
-            <Facebook size={18} className="cursor-pointer hover:scale-110 transition-transform" />
-            <Twitter size={18} className="cursor-pointer hover:scale-110 transition-transform" />
+            <Instagram size={18} className="cursor-pointer hover:scale-110" />
+            <Youtube size={18} className="cursor-pointer hover:scale-110" />
+            <Facebook size={18} className="cursor-pointer hover:scale-110" />
+            <Twitter size={18} className="cursor-pointer hover:scale-110" />
           </div>
         </div>
       </div>
 
       {/* 2. NAVIGATION BAR */}
-      <nav className="w-full bg-white px-8 py-4 lg:py-6 relative">
-        <div className="max-w-[1440px] mx-auto flex flex-col lg:flex-row items-center">
+      <nav className="w-full bg-white px-8 py-4 lg:py-6">
+        <div className="max-w-[1440px] mx-auto flex items-center justify-between gap-4 lg:gap-10">
 
-          <div className="flex justify-between items-center w-full lg:w-auto lg:mr-[120px]">
-            <Link to="/" className="text-2xl font-bold text-[#252B42]">Bandage</Link>
-            <div className="flex items-center gap-4 lg:hidden">
-              <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-[#252B42]">
-                {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
-              </button>
-            </div>
+          {/* Logo */}
+          <Link to="/" className="text-2xl font-bold text-[#252B42] z-[110] flex-shrink-0">Bandage</Link>
+
+          {/* Hamburger (Mobile) */}
+          <div className="lg:hidden z-[110]">
+            <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-[#252B42]">
+              {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
+            </button>
           </div>
 
-          {/* MENU LINKS */}
+          {/* 3. MENU CONTENT  */}
           <div className={`
             ${isMenuOpen ? 'flex' : 'hidden'} 
-            lg:flex flex-col lg:flex-row flex-1 items-center gap-8 lg:gap-4 
-            mt-8 lg:mt-0 text-[#737373] font-bold text-2xl lg:text-sm
+            lg:flex flex-col lg:flex-row flex-1 items-center lg:justify-start 
+            text-[#737373] font-bold text-lg lg:text-sm
+            fixed lg:relative 
+            top-0 lg:top-0 left-0 
+            w-full lg:w-auto 
+            h-screen lg:h-auto 
+            bg-white lg:bg-transparent
+            pt-20 lg:pt-0 pb-10 lg:pb-0
+            overflow-y-auto lg:overflow-visible
+            z-[105] lg:z-auto
+            gap-6 lg:gap-5
           `}>
             <Link to="/" onClick={() => setIsMenuOpen(false)} className={`hover:text-[#23A6F0] ${isActive('/') ? 'text-[#252B42]' : ''}`}>Home</Link>
 
-            {/* DESKTOP MEGA MENU */}
-            <div className="relative group h-full hidden lg:flex items-center">
-              <Link to="/shop" className={`flex items-center gap-1 hover:text-[#23A6F0] py-2 ${isActive('/shop') ? 'text-[#252B42]' : ''}`}>
-                Shop <MdKeyboardArrowDown size={20} className="transition-transform group-hover:rotate-180" />
-              </Link>
-              <div className="absolute top-[100%] left-[-100px] w-[700px] bg-white shadow-2xl border-t-2 border-[#23A6F0] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[100] p-8 flex text-[#737373]">
-                <div className="grid grid-cols-2 gap-10 flex-1">
-                  <div>
-                    <h4 className="text-[#252B42] font-extrabold text-base mb-4 tracking-wide">Women</h4>
-                    <ul className="space-y-3 font-medium text-sm list-none p-0">
-                      {categories.filter(c => c.gender === 'k').map(cat => (
-                        <li key={cat.id}>
-                          <Link to={`/shop/kadin/${cat.title.toLowerCase()}/${cat.id}`} onClick={() => setIsMenuOpen(false)} className="hover:text-[#23A6F0]">
-                            {cat.title}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div>
-                    <h4 className="text-[#252B42] font-extrabold text-base mb-4 tracking-wide">Men</h4>
-                    <ul className="space-y-3 font-medium text-sm list-none p-0">
-                      {categories.filter(c => c.gender === 'e').map(cat => (
-                        <li key={cat.id}>
-                          <Link to={`/shop/erkek/${cat.title.toLowerCase()}/${cat.id}`} onClick={() => setIsMenuOpen(false)} className="hover:text-[#23A6F0]">
-                            {cat.title}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-                <div className="w-[200px] ml-6 overflow-hidden rounded-md hidden md:block">
-                  <img src={slider1} alt="Promo" className="w-full h-48 object-cover rounded" />
-                </div>
-              </div>
-            </div>
-
-            {/* MOBILE SHOP MENU */}
-            <div className="lg:hidden w-full flex flex-col items-center">
-              <button onClick={() => setIsMobileShopOpen(!isMobileShopOpen)} className="flex items-center gap-1">
-                Shop <ChevronDown size={24} className={isMobileShopOpen ? 'rotate-180' : ''} />
+            {/* SHOP */}
+            <div className="relative group w-full lg:w-auto flex flex-col lg:flex-row items-center">
+              <button
+                onClick={() => setIsMobileShopOpen(!isMobileShopOpen)}
+                className={`flex items-center gap-1 hover:text-[#23A6F0] py-2 ${isActive('/shop') ? 'text-[#252B42]' : ''}`}
+              >
+                Shop {isMenuOpen ? <ChevronDown size={20} /> : <MdKeyboardArrowDown size={20} className="hidden lg:block transition-transform group-hover:rotate-180" />}
               </button>
+
+              {/* Mobile Dropdown */}
               {isMobileShopOpen && (
-                <div className="flex flex-col items-center gap-4 mt-4 bg-gray-50 w-screen py-4">
-                  {categories.map(cat => (
-                    <Link
-                      key={cat.id}
-                      to={`/shop/${cat.gender === 'k' ? 'kadin' : 'erkek'}/${cat.title.toLowerCase()}/${cat.id}`}
-                      onClick={() => { setIsMenuOpen(false); setIsMobileShopOpen(false); }}
-                      className="text-xl text-[#737373]"
-                    >
-                      {cat.title}
-                    </Link>
+                <div className="lg:hidden flex flex-col items-center gap-4 bg-gray-50 w-full py-6 my-2 text-base">
+                  <h4 className="text-[#252B42] font-black uppercase">Women</h4>
+                  {categories.filter(c => c.gender === 'k').map(cat => (
+                    <Link key={cat.id} to={`/shop/kadin/${cat.title.toLowerCase()}/${cat.id}`} onClick={() => setIsMenuOpen(false)}>{cat.title}</Link>
+                  ))}
+                  <div className="w-1/4 h-[1px] bg-gray-200"></div>
+                  <h4 className="text-[#252B42] font-black uppercase">Men</h4>
+                  {categories.filter(c => c.gender === 'e').map(cat => (
+                    <Link key={cat.id} to={`/shop/erkek/${cat.title.toLowerCase()}/${cat.id}`} onClick={() => setIsMenuOpen(false)}>{cat.title}</Link>
                   ))}
                 </div>
               )}
+
+              {/* Desktop Mega Menu */}
+              <div className="hidden lg:group-hover:flex absolute top-full left-0 w-[600px] bg-white shadow-2xl border-t-2 border-[#23A6F0] z-[120] p-8 text-left gap-10">
+                <div className="grid grid-cols-2 gap-10 flex-1">
+                  <div>
+                    <h4 className="text-[#252B42] font-black text-xs mb-4 uppercase tracking-widest">Women</h4>
+                    <ul className="space-y-3 text-sm list-none p-0 font-medium">
+                      {categories.filter(c => c.gender === 'k').map(cat => (
+                        <li key={cat.id}><Link to={`/shop/kadin/${cat.title.toLowerCase()}/${cat.id}`} className="hover:text-[#23A6F0]">{cat.title}</Link></li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <h4 className="text-[#252B42] font-black text-xs mb-4 uppercase tracking-widest">Men</h4>
+                    <ul className="space-y-3 text-sm list-none p-0 font-medium">
+                      {categories.filter(c => c.gender === 'e').map(cat => (
+                        <li key={cat.id}><Link to={`/shop/erkek/${cat.title.toLowerCase()}/${cat.id}`} className="hover:text-[#23A6F0]">{cat.title}</Link></li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+                <div className="w-[200px] relative group/promo overflow-hidden rounded-lg self-stretch">
+                  <img
+                    src={slider1}
+                    alt="Promo"
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover/promo:scale-110"
+                  />
+                </div>
+              </div>
             </div>
 
             <Link to="/about" onClick={() => setIsMenuOpen(false)} className="hover:text-[#23A6F0]">About</Link>
@@ -181,111 +185,45 @@ export default function Header() {
             <Link to="/blog" onClick={() => setIsMenuOpen(false)} className="hover:text-[#23A6F0]">Blog</Link>
             <Link to="/contact" onClick={() => setIsMenuOpen(false)} className="hover:text-[#23A6F0]">Contact</Link>
             <Link to="/pricing" onClick={() => setIsMenuOpen(false)} className="hover:text-[#23A6F0]">Pricing</Link>
-          </div>
 
-          {/* 3. MENU CONTENT / MOBILE ACTIONS */}
-          <div className={`
-            ${isMenuOpen ? 'flex' : 'hidden'} 
-            lg:flex flex-col lg:flex-row flex-1 items-center gap-8 lg:gap-4 
-            mt-8 lg:mt-0 text-[#737373] font-bold text-2xl lg:text-sm
-            max-h-[calc(100vh-100px)] overflow-y-auto w-full lg:max-h-none lg:overflow-visible
-          `}>
-            <div className="lg:hidden flex flex-col items-center gap-6 mt-4 pb-8 border-t pt-8 w-full border-gray-100">
-              {user && user.name ? (
-                <div className="flex flex-col items-center gap-6">
+            {/* MOBILE ONLY ACTIONS */}
+            <div className="lg:hidden flex flex-col items-center gap-6 mt-4 w-full border-t pt-8 border-gray-100">
+              {user?.name ? (
+                <>
                   <div className="flex flex-col items-center gap-2">
-                    <Gravatar email={user.email || ""} size={48} className="rounded-full border-2 border-[#23A6F0]" />
-                    <span className="text-[#252B42] text-xl">{user.name}</span>
+                    <Gravatar email={user.email} size={40} className="rounded-full border border-[#23A6F0]" />
+                    <span className="text-[#252B42]">{user.name}</span>
                   </div>
-                  {/* MOBILE PREVIOUS ORDERS LINK */}
-                  <Link 
-                    to="/previous-orders" 
-                    onClick={() => setIsMenuOpen(false)}
-                    className="flex items-center gap-2 text-[#23A6F0]"
-                  >
-                    <Package size={24} /> Siparişlerim
-                  </Link>
-                  <button onClick={handleLogout} className="text-red-600 text-xl font-bold">Çıkış Yap</button>
-                </div>
+                  <Link to="/previous-orders" onClick={() => setIsMenuOpen(false)} className="text-[#23A6F0] font-bold">Siparişlerim</Link>
+                  <button onClick={handleLogout} className="text-red-500 font-bold">Çıkış Yap</button>
+                </>
               ) : (
-                <div className="flex flex-col items-center gap-4 text-[#23A6F0]">
+                <div className="text-[#23A6F0] flex flex-col items-center gap-4">
                   <Link to="/login" onClick={() => setIsMenuOpen(false)}>Login</Link>
                   <Link to="/signup" onClick={() => setIsMenuOpen(false)}>Register</Link>
                 </div>
               )}
-
+              {/* Mobile Icons */}
               <div className="flex items-center gap-8 text-[#23A6F0] mt-4">
-                <div className="relative">
-                  <ShoppingCart size={32} onClick={() => { history.push('/cart'); setIsMenuOpen(false); }} />
-                  <span className="absolute -top-2 -right-2 bg-[#23A6F0] text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold">
-                    {totalItems}
-                  </span>
+                <div className="relative" onClick={() => { history.push('/cart'); setIsMenuOpen(false); }}>
+                  <ShoppingCart size={28} />
+                  {totalItems > 0 && <span className="absolute -top-2 -right-2 bg-[#23A6F0] text-white text-[10px] rounded-full w-5 h-5 flex items-center justify-center font-bold border-2 border-white">{totalItems}</span>}
                 </div>
-                <Heart size={32} />
-                <Search size={32} />
+                <Heart size={28} />
+                <Search size={28} />
               </div>
             </div>
           </div>
 
-          {/* 4. DESKTOP ACTIONS AREA */}
-          <div className="hidden lg:flex items-center gap-6 text-[#23A6F0] font-bold">
-            {user && user.name ? <UserProfile /> : <AuthLinks />}
-            <Search size={24} className="cursor-pointer hover:scale-110 transition-transform text-[#23A6F0]" />
-
-            {/* SEPET DROPDOWN */}
-            <div className="relative group flex items-center gap-1 cursor-pointer">
-              <div className="flex items-center gap-1 hover:opacity-80" onClick={() => history.push('/cart')}>
-                <ShoppingCart size={24} />
-                <span className="text-xs bg-[#23A6F0] text-white rounded-full w-5 h-5 flex items-center justify-center -mt-3 -ml-2 font-bold">
-                  {totalItems}
-                </span>
-              </div>
-
-              {/* Dropdown Menü (Sepet) */}
-              <div className="absolute top-full right-0 w-80 bg-white shadow-2xl border border-gray-100 rounded-xl p-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[110] text-[#252B42] mt-2">
-                <h3 className="font-bold border-b border-gray-50 pb-3 mb-3 text-sm">
-                  Sepetim ({totalItems} Ürün)
-                </h3>
-                <div className="max-h-80 overflow-y-auto space-y-0 pr-2">
-                  {cart.length > 0 ? (
-                    cart.map((item, idx) => (
-                      <div key={idx} className="flex gap-4 items-center border-b border-gray-50 py-4 last:border-0">
-                        <img
-                          src={item.product.images?.[0]?.url || item.product.image}
-                          alt={item.product.name}
-                          className="w-16 h-20 object-cover rounded-lg border border-gray-50 shadow-sm"
-                        />
-                        <div className="flex-1 flex flex-col justify-between h-20">
-                          <div>
-                            <p className="text-[12px] font-bold line-clamp-2 leading-tight text-[#252B42]">
-                              {item.product.name}
-                            </p>
-                            <p className="text-[11px] text-[#737373] mt-1">Adet: {item.count}</p>
-                          </div>
-                          <p className="text-sm text-[#23A6F0] font-black tracking-tight">
-                            ${(item.product.price * item.count).toFixed(2)}
-                          </p>
-                        </div>
-                      </div>
-                    ))
-                  ) : (
-                    <div className="py-6 text-center text-[#737373] text-sm">Sepetiniz şu an boş.</div>
-                  )}
-                </div>
-                <div className="pt-4 flex gap-3 border-t border-gray-100 mt-2">
-                  <Link to="/cart" className="flex-1 text-center border border-[#23A6F0] text-[#23A6F0] py-2.5 rounded-lg font-bold text-xs hover:bg-blue-50 transition-all">
-                    Sepete Git
-                  </Link>
-                  <Link to="/order" className="flex-1 text-center bg-[#23A6F0] text-white py-2.5 rounded-lg font-bold text-xs hover:bg-[#1a8cd3] transition-all shadow-md active:scale-95">
-                    Siparişi Tamamla
-                  </Link>
-                </div>
-              </div>
+          {/* 4. DESKTOP ACTIONS */}
+          <div className="hidden lg:flex items-center gap-6 text-[#23A6F0] font-bold flex-shrink-0">
+            {user?.name ? <UserProfile /> : <AuthLinks />}
+            <Search size={22} className="cursor-pointer" />
+            <div className="relative flex items-center gap-1 cursor-pointer" onClick={() => history.push('/cart')}>
+              <ShoppingCart size={22} />
+              <span className="text-xs bg-[#23A6F0] text-white rounded-full w-5 h-5 flex items-center justify-center -mt-3 -ml-2 font-bold">{totalItems}</span>
             </div>
-
-            <div className="flex items-center gap-1 cursor-pointer hover:opacity-80">
-              <Heart size={24} /> <span className="text-xs">0</span>
-            </div>
+            <div className="flex items-center gap-1"><Heart size={22} /> <span className="text-xs">0</span></div>
           </div>
         </div>
       </nav>
