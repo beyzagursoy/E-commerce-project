@@ -102,7 +102,7 @@ export default function OrderPage() {
 
                     {/* Sözleşme Onay Kutusu */}
                     <div className={`bg-white p-5 rounded-2xl border transition-all mb-4 shadow-sm flex gap-3 items-start ${
-                        step === 2 && !isAgreed ? 'border-orange-200 bg-orange-50/30' : 'border-gray-100'
+                        step === 2 && !isAgreed ? 'border-red-200 bg-red-50/30' : 'border-gray-100'
                     }`}>
                         <input 
                             type="checkbox" 
@@ -173,7 +173,7 @@ export default function OrderPage() {
                     
                     {/* Uyarı Mesajı */}
                     {step === 2 && !isAgreed && (
-                        <div className="flex items-center justify-center gap-1 mt-3 text-orange-500">
+                        <div className="flex items-center justify-center gap-1 mt-3 text-[#E74040]">
                             <AlertCircle size={12} />
                             <p className="text-[10px] font-bold uppercase tracking-tight">
                                 Sözleşmeyi onaylamanız gerekiyor

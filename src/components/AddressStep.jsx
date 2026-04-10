@@ -154,7 +154,7 @@ export default function AddressStep({ onNext }) {
                 ))}
             </div>
 
-            {/* Fatura Adresi (Eğer kargo adresi ile aynı değilse) */}
+            {/* Fatura Adresi */}
             {!isBillingSame && (
                 <div className="mt-8 animate-in slide-in-from-top-4 duration-300">
                     <h2 className="text-xl font-bold text-[#252B42] mb-4">Fatura Adresi</h2>
