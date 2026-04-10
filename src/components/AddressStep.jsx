@@ -19,15 +19,6 @@ export default function AddressStep({ onNext }) {
     const [isFormOpen, setIsFormOpen] = useState(false);
     const [editingAddress, setEditingAddress] = useState(null);
 
-    useEffect(() => {
-        const token = localStorage.getItem("token");
-        if (!token) {
-            history.push("/login");
-            return;
-        }
-        fetchAddresses();
-    }, [history]);
-
     const fetchAddresses = () => {
         axiosWithAuth()
             .get('/user/address')
@@ -71,6 +62,15 @@ export default function AddressStep({ onNext }) {
         setEditingAddress(addr);
         setIsFormOpen(true);
     };
+
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            history.push("/login");
+            return;
+        }
+        fetchAddresses();
+    }, [history]);
 
     return (
         <div className="flex flex-col gap-6 animate-in fade-in duration-500 pb-10 font-montserrat">

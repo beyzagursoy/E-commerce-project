@@ -1,4 +1,4 @@
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
@@ -54,9 +54,7 @@ function App() {
           <Route path="/cart" component={ShoppingCartPage} />
 
           <ProtectedRoute path="/order" component={OrderPage} />
-          <Route path="/previous-orders">
-            {localStorage.getItem("token") ? <PreviousOrders /> : <Redirect to="/login" />}
-          </Route>
+          <ProtectedRoute path="/previous-orders" component={PreviousOrders} />
         </Switch>
       </PageContent>
 

@@ -25,17 +25,6 @@ export default function Header() {
   const totalItems = cart.reduce((total, item) => total + item.count, 0);
   const isActive = (path) => location.pathname === path;
 
-  useEffect(() => {
-    dispatch(fetchCategories());
-  }, [dispatch]);
-
-  const handleLogout = () => {
-    dispatch(setUser({}));
-    localStorage.removeItem('token');
-    history.push('/');
-    setIsMenuOpen(false);
-  };
-
   const UserProfile = () => (
     <div className="flex items-center gap-3 group relative cursor-pointer">
       <div className="flex items-center gap-2 px-2 py-1 rounded-full hover:bg-gray-100 transition-colors">
@@ -75,6 +64,17 @@ export default function Header() {
     </div>
   );
 
+  useEffect(() => {
+    dispatch(fetchCategories());
+  }, [dispatch]);
+
+  const handleLogout = () => {
+    dispatch(setUser({}));
+    localStorage.removeItem('token');
+    history.push('/');
+    setIsMenuOpen(false);
+  };
+
   return (
     <header className="w-full font-montserrat sticky top-0 z-[100] bg-white shadow-sm">
       {/* 1. TOP BAR */}
@@ -99,17 +99,15 @@ export default function Header() {
       <nav className="w-full bg-white px-8 py-4 lg:py-6">
         <div className="max-w-[1440px] mx-auto flex items-center justify-between gap-4 lg:gap-10">
 
-          {/* Logo */}
           <Link to="/" className="text-2xl font-bold text-[#252B42] z-[110] flex-shrink-0">Bandage</Link>
 
-          {/* Hamburger (Mobile) */}
           <div className="lg:hidden z-[110]">
             <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-[#252B42]">
               {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
           </div>
 
-          {/* 3. MENU CONTENT  */}
+          {/* 3. MENU CONTENT */}
           <div className={`
             ${isMenuOpen ? 'flex' : 'hidden'} 
             lg:flex flex-col lg:flex-row flex-1 items-center lg:justify-start 
@@ -128,14 +126,26 @@ export default function Header() {
 
             {/* SHOP */}
             <div className="relative group w-full lg:w-auto flex flex-col lg:flex-row items-center">
-              <button
-                onClick={() => setIsMobileShopOpen(!isMobileShopOpen)}
-                className={`flex items-center gap-1 hover:text-[#23A6F0] py-2 ${isActive('/shop') ? 'text-[#252B42]' : ''}`}
+              <Link
+                to="/shop"
+                onClick={(e) => {
+                  if (window.innerWidth < 1024) {
+                    setIsMobileShopOpen(!isMobileShopOpen);
+                  }
+                }}
+                className={`flex items-center gap-1 hover:text-[#23A6F0] py-2 transition-colors ${isActive('/shop') ? 'text-[#252B42]' : ''
+                  }`}
               >
-                Shop {isMenuOpen ? <ChevronDown size={20} /> : <MdKeyboardArrowDown size={20} className="hidden lg:block transition-transform group-hover:rotate-180" />}
-              </button>
+                Shop
+                <span className="lg:hidden">
+                  <ChevronDown size={20} className={`transition-transform ${isMobileShopOpen ? 'rotate-180' : ''}`} />
+                </span>
+                <span className="hidden lg:block">
+                  <MdKeyboardArrowDown size={20} className="transition-transform group-hover:rotate-180" />
+                </span>
+              </Link>
 
-              {/* Mobile Dropdown */}
+              {/* Mobil Dropdown İçeriği */}
               {isMobileShopOpen && (
                 <div className="lg:hidden flex flex-col items-center gap-4 bg-gray-50 w-full py-6 my-2 text-base">
                   <h4 className="text-[#252B42] font-black uppercase">Women</h4>
@@ -171,11 +181,7 @@ export default function Header() {
                   </div>
                 </div>
                 <div className="w-[200px] relative group/promo overflow-hidden rounded-lg self-stretch">
-                  <img
-                    src={slider1}
-                    alt="Promo"
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover/promo:scale-110"
-                  />
+                  <img src={slider1} alt="Promo" className="w-full h-full object-cover transition-transform duration-500 group-hover/promo:scale-110" />
                 </div>
               </div>
             </div>
@@ -192,25 +198,32 @@ export default function Header() {
                 <>
                   <div className="flex flex-col items-center gap-2">
                     <Gravatar email={user.email} size={40} className="rounded-full border border-[#23A6F0]" />
-                    <span className="text-[#252B42]">{user.name}</span>
+                    <span className="text-[#252B42] font-bold">{user.name}</span>
                   </div>
                   <Link to="/previous-orders" onClick={() => setIsMenuOpen(false)} className="text-[#23A6F0] font-bold">Siparişlerim</Link>
                   <button onClick={handleLogout} className="text-red-500 font-bold">Çıkış Yap</button>
                 </>
               ) : (
                 <div className="text-[#23A6F0] flex flex-col items-center gap-4">
-                  <Link to="/login" onClick={() => setIsMenuOpen(false)}>Login</Link>
-                  <Link to="/signup" onClick={() => setIsMenuOpen(false)}>Register</Link>
+                  <Link to="/login" onClick={() => setIsMenuOpen(false)} className="font-bold">Login</Link>
+                  <Link to="/signup" onClick={() => setIsMenuOpen(false)} className="bg-[#23A6F0] text-white px-8 py-2 rounded-md font-bold">Register</Link>
                 </div>
               )}
-              {/* Mobile Icons */}
-              <div className="flex items-center gap-8 text-[#23A6F0] mt-4">
-                <div className="relative" onClick={() => { history.push('/cart'); setIsMenuOpen(false); }}>
-                  <ShoppingCart size={28} />
-                  {totalItems > 0 && <span className="absolute -top-2 -right-2 bg-[#23A6F0] text-white text-[10px] rounded-full w-5 h-5 flex items-center justify-center font-bold border-2 border-white">{totalItems}</span>}
+              {/* Mobil Sepet ve İkonlar */}
+              <div className="flex items-center gap-10 text-[#23A6F0] mt-4">
+                <div className="relative cursor-pointer" onClick={() => { history.push('/cart'); setIsMenuOpen(false); }}>
+                  <ShoppingCart size={30} />
+                  {totalItems > 0 && (
+                    <span className="absolute -top-3 -right-3 bg-[#23A6F0] text-white text-xs rounded-full w-6 h-6 flex items-center justify-center font-bold border-2 border-white">
+                      {totalItems}
+                    </span>
+                  )}
                 </div>
-                <Heart size={28} />
-                <Search size={28} />
+                <div className="relative flex items-center">
+                  <Heart size={30} />
+                  <span className="ml-1 font-bold text-sm">0</span>
+                </div>
+                <Search size={30} />
               </div>
             </div>
           </div>
@@ -219,9 +232,39 @@ export default function Header() {
           <div className="hidden lg:flex items-center gap-6 text-[#23A6F0] font-bold flex-shrink-0">
             {user?.name ? <UserProfile /> : <AuthLinks />}
             <Search size={22} className="cursor-pointer" />
-            <div className="relative flex items-center gap-1 cursor-pointer" onClick={() => history.push('/cart')}>
-              <ShoppingCart size={22} />
-              <span className="text-xs bg-[#23A6F0] text-white rounded-full w-5 h-5 flex items-center justify-center -mt-3 -ml-2 font-bold">{totalItems}</span>
+
+            <div className="relative group flex items-center gap-1 cursor-pointer">
+              <div className="flex items-center gap-1" onClick={() => history.push('/cart')}>
+                <ShoppingCart size={22} />
+                <span className="text-xs bg-[#23A6F0] text-white rounded-full w-5 h-5 flex items-center justify-center -mt-3 -ml-2 font-bold">{totalItems}</span>
+              </div>
+
+              {/* Mini Cart Dropdown (Desktop) */}
+              <div className="absolute top-full right-0 mt-2 w-80 bg-white shadow-2xl rounded-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-[120] p-4">
+                <h3 className="text-[#252B42] font-bold mb-4 border-b pb-2 text-left">Sepetim ({totalItems} Ürün)</h3>
+                <div className="max-h-60 overflow-y-auto pr-1">
+                  {cart.length > 0 ? (
+                    cart.map((item, index) => (
+                      <div key={index} className="flex gap-3 mb-4 last:mb-0 items-center">
+                        <img src={item.product?.images?.[0]?.url || ""} alt={item.product?.name} className="w-16 h-20 object-cover rounded-md flex-shrink-0" />
+                        <div className="flex-1 min-w-0 text-left">
+                          <p className="text-sm font-bold text-[#252B42] truncate">{item.product?.name}</p>
+                          <p className="text-xs text-gray-500 font-medium">Adet: {item.count}</p>
+                          <p className="text-[#23A6F0] font-bold text-sm mt-1">{(item.product?.price * item.count).toFixed(2)} TL</p>
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <p className="text-center py-4 text-gray-500 text-sm font-medium">Sepetiniz şu an boş.</p>
+                  )}
+                </div>
+                {cart.length > 0 && (
+                  <div className="mt-4 pt-4 border-t flex gap-2">
+                    <button onClick={() => history.push('/cart')} className="flex-1 px-4 py-2 border-2 border-[#23A6F0] text-[#23A6F0] rounded-lg text-xs font-bold hover:bg-blue-50 transition-colors">Sepete Git</button>
+                    <button onClick={() => history.push('/order')} className="flex-1 px-4 py-2 bg-[#23A6F0] text-white rounded-lg text-xs font-bold hover:bg-[#1d87c4] transition-colors shadow-lg shadow-blue-100">Siparişi Tamamla</button>
+                  </div>
+                )}
+              </div>
             </div>
             <div className="flex items-center gap-1"><Heart size={22} /> <span className="text-xs">0</span></div>
           </div>

@@ -8,7 +8,7 @@ export default function PaymentStep() {
     const dispatch = useDispatch();
     const cart = useSelector((state) => state.shoppingCart?.cart || []);
     const selectedCardFromRedux = useSelector((state) => state.shoppingCart?.payment);
-    
+
     const [cards, setCards] = useState([]);
     const [isFormOpen, setIsFormOpen] = useState(false);
     const [editingCard, setEditingCard] = useState(null);
@@ -21,12 +21,8 @@ export default function PaymentStep() {
 
     const shippingFee = 29.99;
     const shippingDiscount = productsTotal > 150 ? 29.99 : 0;
-    const specialDiscount = 10.00; 
+    const specialDiscount = 10.00;
     const grandTotal = (productsTotal + shippingFee - shippingDiscount - specialDiscount).toFixed(2);
-
-    useEffect(() => {
-        fetchCards();
-    }, []);
 
     const fetchCards = () => {
         axiosWithAuth()
@@ -62,9 +58,13 @@ export default function PaymentStep() {
         setIsFormOpen(true);
     };
 
+    useEffect(() => {
+        fetchCards();
+    }, []);
+
     return (
         <div className="flex flex-col gap-6 animate-in fade-in duration-500 pb-10 font-montserrat text-[#252B42]">
-            
+
             {/* Üst Adımlar */}
             <div className="flex border rounded-2xl overflow-hidden bg-white shadow-sm h-24">
                 <div className="flex-1 p-5 bg-gray-50 opacity-50 border-r flex flex-col justify-center">
@@ -79,7 +79,7 @@ export default function PaymentStep() {
 
             {/* Ana İçerik Alanı */}
             <div className="bg-white p-8 rounded-[32px] border border-gray-100 shadow-sm">
-                
+
                 {/* Başlık Bölümü */}
                 <div className="flex items-center gap-4 mb-8 pb-6 border-b border-gray-50">
                     <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center">
@@ -92,12 +92,12 @@ export default function PaymentStep() {
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
-                    
+
                     {/* SOL TARAF */}
                     <div className="lg:col-span-7 space-y-4">
                         <div className="flex justify-between items-center mb-4 px-1">
                             <h3 className="font-bold text-base">Kart Bilgileri</h3>
-                            <button 
+                            <button
                                 onClick={() => { setEditingCard(null); setIsFormOpen(true); }}
                                 className="text-[#23A6F0] text-xs font-bold hover:underline flex items-center gap-1"
                             >
@@ -108,14 +108,13 @@ export default function PaymentStep() {
                         {/* Kart Listesi */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             {cards.map((card) => (
-                                <div 
+                                <div
                                     key={card.id}
                                     onClick={() => handleSelectCard(card)}
-                                    className={`p-5 rounded-[24px] border-2 transition-all cursor-pointer relative group flex flex-col justify-between h-40 ${
-                                        selectedCardFromRedux?.id === card.id 
-                                        ? 'border-[#23A6F0] bg-blue-50/10 shadow-md ring-1 ring-[#23A6F0]/20' 
-                                        : 'border-gray-100 hover:border-gray-200 bg-white'
-                                    }`}
+                                    className={`p-5 rounded-[24px] border-2 transition-all cursor-pointer relative group flex flex-col justify-between h-40 ${selectedCardFromRedux?.id === card.id
+                                            ? 'border-[#23A6F0] bg-blue-50/10 shadow-md ring-1 ring-[#23A6F0]/20'
+                                            : 'border-gray-100 hover:border-gray-200 bg-white'
+                                        }`}
                                 >
                                     <div className="flex justify-between items-start">
                                         <div className="flex -space-x-3">
@@ -123,8 +122,8 @@ export default function PaymentStep() {
                                             <div className="w-8 h-8 rounded-full bg-[#F79E1B] opacity-90"></div>
                                         </div>
                                         <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                                            <button onClick={(e) => handleEditCard(e, card)} className="p-1.5 text-gray-400 hover:text-[#23A6F0]"><Edit2 size={14}/></button>
-                                            <button onClick={(e) => handleDeleteCard(e, card.id)} className="p-1.5 text-gray-400 hover:text-red-500"><Trash2 size={14}/></button>
+                                            <button onClick={(e) => handleEditCard(e, card)} className="p-1.5 text-gray-400 hover:text-[#23A6F0]"><Edit2 size={14} /></button>
+                                            <button onClick={(e) => handleDeleteCard(e, card.id)} className="p-1.5 text-gray-400 hover:text-red-500"><Trash2 size={14} /></button>
                                         </div>
                                     </div>
 
@@ -158,10 +157,10 @@ export default function PaymentStep() {
                     <div className="lg:col-span-5 lg:border-l lg:pl-10 border-gray-50">
                         <div className="flex items-center gap-2 mb-1">
                             <h3 className="font-bold text-base">Taksit Seçenekleri</h3>
-                            <HelpCircle size={14} className="text-gray-300"/>
+                            <HelpCircle size={14} className="text-gray-300" />
                         </div>
                         <p className="text-[11px] text-gray-400 mb-6 font-medium">Kartınıza uygun taksit seçeneğini seçiniz</p>
-                        
+
                         <div className="rounded-2xl border border-gray-100 overflow-hidden bg-gray-50/30">
                             <table className="w-full text-sm">
                                 <thead className="bg-white text-gray-400 border-b border-gray-100">
@@ -201,10 +200,10 @@ export default function PaymentStep() {
             </div>
 
             {isFormOpen && (
-                <CardForm 
-                    onClose={() => setIsFormOpen(false)} 
-                    onRefresh={fetchCards} 
-                    editCard={editingCard} 
+                <CardForm
+                    onClose={() => setIsFormOpen(false)}
+                    onRefresh={fetchCards}
+                    editCard={editingCard}
                 />
             )}
         </div>
