@@ -8,10 +8,10 @@ import { verifyToken } from './store/actions/clientActions';
 
 import Header from './layout/Header';
 import Footer from './layout/Footer';
-import PageContent from './layout/PageContent'; 
+import PageContent from './layout/PageContent';
 import HomePage from './pages/HomePage';
-import ShopPage from './pages/ShopPage'; 
-import ProductDetail from './pages/ProductDetailPage'; 
+import ShopPage from './pages/ShopPage';
+import ProductDetail from './pages/ProductDetailPage';
 import ContactPage from './pages/ContactPage';
 import TeamPage from './pages/TeamPage';
 import AboutPage from './pages/AboutPage';
@@ -21,8 +21,9 @@ import PricingPage from './pages/PricingPage';
 import BlogPage from './pages/BlogPage';
 import ShoppingCartPage from './pages/ShoppingCartPage';
 
-import ProtectedRoute from './components/ProtectedRoute'; // Yolunu kontrol et
-import OrderPage from './pages/OrderPage'; // Yeni oluşturacağın sipariş sayfası
+import ProtectedRoute from './components/ProtectedRoute'; 
+import OrderPage from './pages/OrderPage'; 
+import PreviousOrders from './components/PreviousOrders';
 
 function App() {
   const dispatch = useDispatch();
@@ -36,13 +37,13 @@ function App() {
       <Header />
 
       <PageContent>
-        <Switch> 
+        <Switch>
           <Route exact path="/" component={HomePage} />
           <Route path="/shop/:gender/:categoryName/:categoryId/:productNameSlug/:productId" component={ProductDetail} />
           <Route path="/shop/:gender/:categoryName/:categoryId" component={ShopPage} />
           <Route path="/shop/:productId" component={ProductDetail} />
           <Route path="/shop" component={ShopPage} />
-  
+
           <Route path="/contact" component={ContactPage} />
           <Route path="/about" component={AboutPage} />
           <Route path="/team" component={TeamPage} />
@@ -53,14 +54,17 @@ function App() {
           <Route path="/cart" component={ShoppingCartPage} />
 
           <ProtectedRoute path="/order" component={OrderPage} />
+          <Route path="/previous-orders">
+            {localStorage.getItem("token") ? <PreviousOrders /> : <Redirect to="/login" />}
+          </Route>
         </Switch>
       </PageContent>
 
       <Footer />
-      
-      <ToastContainer 
-        position="bottom-right" 
-        autoClose={3000} 
+
+      <ToastContainer
+        position="bottom-right"
+        autoClose={3000}
         theme="colored"
       />
     </div>

@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { axiosWithAuth } from '../api/api';
 import { Plus, Edit2, Trash2, ShieldCheck, HelpCircle, CreditCard } from 'lucide-react';
 import CardForm from './CardForm';
 
 export default function PaymentStep() {
+    const dispatch = useDispatch();
     const cart = useSelector((state) => state.shoppingCart?.cart || []);
+    const selectedCardFromRedux = useSelector((state) => state.shoppingCart?.payment);
     
     const [cards, setCards] = useState([]);
-    const [selectedCard, setSelectedCard] = useState(null);
     const [isFormOpen, setIsFormOpen] = useState(false);
     const [editingCard, setEditingCard] = useState(null);
 
@@ -32,11 +33,15 @@ export default function PaymentStep() {
             .get('/user/card')
             .then(res => {
                 setCards(res.data);
-                if (res.data.length > 0 && !selectedCard) {
-                    setSelectedCard(res.data[0].id);
+                if (res.data.length > 0 && (!selectedCardFromRedux || Object.keys(selectedCardFromRedux).length === 0)) {
+                    handleSelectCard(res.data[0]);
                 }
             })
             .catch(err => console.error("Kartlar yüklenemedi:", err));
+    };
+
+    const handleSelectCard = (card) => {
+        dispatch({ type: 'SET_PAYMENT', payload: card });
     };
 
     const handleDeleteCard = (e, cardId) => {
@@ -44,7 +49,9 @@ export default function PaymentStep() {
         if (window.confirm("Bu kartı silmek istediğinize emin misiniz?")) {
             axiosWithAuth().delete(`/user/card/${cardId}`).then(() => {
                 fetchCards();
-                if (selectedCard === cardId) setSelectedCard(null);
+                if (selectedCardFromRedux?.id === cardId) {
+                    dispatch({ type: 'SET_PAYMENT', payload: {} });
+                }
             });
         }
     };
@@ -94,7 +101,7 @@ export default function PaymentStep() {
                                 onClick={() => { setEditingCard(null); setIsFormOpen(true); }}
                                 className="text-[#23A6F0] text-xs font-bold hover:underline flex items-center gap-1"
                             >
-                                <Plus size={14} /> Başka bir kart ile ödeme yap
+                                <Plus size={14} /> Başka bir kart ekle
                             </button>
                         </div>
 
@@ -103,9 +110,9 @@ export default function PaymentStep() {
                             {cards.map((card) => (
                                 <div 
                                     key={card.id}
-                                    onClick={() => setSelectedCard(card.id)}
+                                    onClick={() => handleSelectCard(card)}
                                     className={`p-5 rounded-[24px] border-2 transition-all cursor-pointer relative group flex flex-col justify-between h-40 ${
-                                        selectedCard === card.id 
+                                        selectedCardFromRedux?.id === card.id 
                                         ? 'border-[#23A6F0] bg-blue-50/10 shadow-md ring-1 ring-[#23A6F0]/20' 
                                         : 'border-gray-100 hover:border-gray-200 bg-white'
                                     }`}
@@ -122,7 +129,7 @@ export default function PaymentStep() {
                                     </div>
 
                                     <div>
-                                        <p className="text-sm font-bold tracking-widest mb-1">
+                                        <p className="text-sm font-bold tracking-widest mb-1 text-[#252B42]">
                                             **** **** **** {card.card_no.slice(-4)}
                                         </p>
                                         <div className="flex justify-between items-end">
@@ -137,9 +144,8 @@ export default function PaymentStep() {
                                         </div>
                                     </div>
 
-                                    {/* Seçim İkonu */}
-                                    {selectedCard === card.id && (
-                                        <div className="absolute -top-2 -right-2 bg-[#23A6F0] text-white rounded-full p-1 shadow-lg">
+                                    {selectedCardFromRedux?.id === card.id && (
+                                        <div className="absolute -top-2 -right-2 bg-[#23A6F0] text-white rounded-full p-1 shadow-lg border-2 border-white">
                                             <ShieldCheck size={16} />
                                         </div>
                                     )}
@@ -195,7 +201,11 @@ export default function PaymentStep() {
             </div>
 
             {isFormOpen && (
-                <CardForm onClose={() => setIsFormOpen(false)} onRefresh={fetchCards} editCard={editingCard} />
+                <CardForm 
+                    onClose={() => setIsFormOpen(false)} 
+                    onRefresh={fetchCards} 
+                    editCard={editingCard} 
+                />
             )}
         </div>
     );

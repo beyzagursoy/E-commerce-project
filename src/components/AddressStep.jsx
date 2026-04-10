@@ -1,19 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom'; 
+import { useDispatch, useSelector } from 'react-redux';
 
 import { axiosWithAuth } from '../api/api';
-import { Plus, Edit2, Trash2, Info, ChevronRight } from 'lucide-react'; 
+import { Plus, Edit2, Trash2, Info } from 'lucide-react'; 
 import AddressForm from './AddressForm';
 
 export default function AddressStep({ onNext }) {
+    const dispatch = useDispatch();
+    const history = useHistory();
+    
+    const reduxAddress = useSelector((state) => state.shoppingCart.address);
+
     const [addresses, setAddresses] = useState([]);
-    const [selectedShippingAddress, setSelectedShippingAddress] = useState(null);
-    const [selectedBillingAddress, setSelectedBillingAddress] = useState(null);
+    const [selectedShippingAddress, setSelectedShippingAddress] = useState(reduxAddress?.id || null);
+    const [selectedBillingAddress, setSelectedBillingAddress] = useState(reduxAddress?.id || null);
     const [isBillingSame, setIsBillingSame] = useState(true);
     const [isFormOpen, setIsFormOpen] = useState(false);
     const [editingAddress, setEditingAddress] = useState(null);
-    
-    const history = useHistory();
 
     useEffect(() => {
         const token = localStorage.getItem("token");
@@ -30,11 +34,21 @@ export default function AddressStep({ onNext }) {
             .then(res => {
                 setAddresses(res.data);
                 if (res.data.length > 0 && !selectedShippingAddress) {
-                    setSelectedShippingAddress(res.data[0].id);
-                    setSelectedBillingAddress(res.data[0].id);
+                    const firstAddr = res.data[0];
+                    setSelectedShippingAddress(firstAddr.id);
+                    setSelectedBillingAddress(firstAddr.id);
+                    dispatch({ type: 'SET_ADDRESS', payload: firstAddr });
                 }
             })
             .catch(err => console.error("Adresler çekilemedi:", err));
+    };
+
+    const handleAddressClick = (addr) => {
+        setSelectedShippingAddress(addr.id);
+        if (isBillingSame) {
+            setSelectedBillingAddress(addr.id);
+        }
+        dispatch({ type: 'SET_ADDRESS', payload: addr });
     };
 
     const handleDelete = (e, id) => {
@@ -42,7 +56,12 @@ export default function AddressStep({ onNext }) {
         if (window.confirm("Bu adresi silmek istediğinize emin misiniz?")) {
             axiosWithAuth()
                 .delete(`/user/address/${id}`)
-                .then(() => fetchAddresses())
+                .then(() => {
+                    fetchAddresses();
+                    if (selectedShippingAddress === id) {
+                        dispatch({ type: 'SET_ADDRESS', payload: {} });
+                    }
+                })
                 .catch(err => console.error("Silme işlemi başarısız:", err));
         }
     };
@@ -53,29 +72,17 @@ export default function AddressStep({ onNext }) {
         setIsFormOpen(true);
     };
 
-    const handleContinue = () => {
-        if (!selectedShippingAddress) {
-            alert("Lütfen bir teslimat adresi seçin.");
-            return;
-        }
-        if (onNext) {
-            onNext({
-                shippingAddressId: selectedShippingAddress,
-                billingAddressId: isBillingSame ? selectedShippingAddress : selectedBillingAddress
-            });
-        }
-    };
-
     return (
-        <div className="flex flex-col gap-6 animate-in fade-in duration-500 pb-10">
+        <div className="flex flex-col gap-6 animate-in fade-in duration-500 pb-10 font-montserrat">
             {/* Header Steps */}
-            <div className="flex border rounded-2xl overflow-hidden bg-white shadow-sm">
-                <div className="flex-1 p-5 border-b-4 border-[#23A6F0] bg-blue-50/20">
+            <div className="flex border rounded-2xl overflow-hidden bg-white shadow-sm h-24">
+                <div className="flex-1 p-5 border-b-4 border-[#23A6F0] bg-blue-50/20 flex flex-col justify-center">
                     <h3 className="font-bold text-[#23A6F0] text-lg">1. Adres Bilgileri</h3>
-                    <p className="text-[11px] text-gray-400">Teslimat ve fatura adresi seçimi</p>
+                    <p className="text-[11px] text-[#23A6F0]/70">Teslimat ve fatura adresi seçimi</p>
                 </div>
-                <div className="flex-1 p-5 bg-gray-50 opacity-50">
-                    <h3 className="font-bold text-gray-700 text-lg">2. Ödeme Seçenekleri</h3>
+                <div className="flex-1 p-5 bg-gray-50 opacity-50 border-r flex flex-col justify-center">
+                    <h3 className="font-bold text-gray-500 text-lg">2. Ödeme Seçenekleri</h3>
+                    <p className="text-[11px] text-gray-400">Banka/Kredi Kartı veya Alışveriş Kredisi</p>
                 </div>
             </div>
 
@@ -86,7 +93,7 @@ export default function AddressStep({ onNext }) {
                 </p>
             </div>
 
-            <div className="flex justify-between items-center px-1">
+            <div className="flex justify-between items-center px-1 mt-2">
                 <h2 className="text-xl font-bold text-[#252B42]">Teslimat Adresi</h2>
                 <label className="flex items-center gap-2 text-sm font-semibold text-[#737373] cursor-pointer">
                     <input
@@ -100,6 +107,7 @@ export default function AddressStep({ onNext }) {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                {/* Yeni Adres Ekleme Kartı */}
                 <div
                     onClick={() => { setEditingAddress(null); setIsFormOpen(true); }}
                     className="h-[180px] border-2 border-dashed border-gray-200 rounded-[32px] flex flex-col items-center justify-center gap-2 text-gray-400 hover:border-[#23A6F0] hover:text-[#23A6F0] transition-all bg-white cursor-pointer group shadow-sm"
@@ -110,15 +118,13 @@ export default function AddressStep({ onNext }) {
                     <span className="font-bold text-sm">Yeni Adres Ekle</span>
                 </div>
 
+                {/* Adres Listesi */}
                 {addresses.map((addr) => (
                     <div
                         key={addr.id}
-                        onClick={() => {
-                            setSelectedShippingAddress(addr.id);
-                            if (isBillingSame) setSelectedBillingAddress(addr.id);
-                        }}
+                        onClick={() => handleAddressClick(addr)}
                         className={`p-6 rounded-[32px] border-2 transition-all bg-white h-[180px] flex flex-col justify-between cursor-pointer relative ${
-                            selectedShippingAddress === addr.id ? 'border-[#23A6F0] shadow-md' : 'border-gray-100'
+                            selectedShippingAddress === addr.id ? 'border-[#23A6F0] shadow-md ring-1 ring-[#23A6F0]/10' : 'border-gray-100'
                         }`}
                     >
                         <div className="flex justify-between items-start">
@@ -128,28 +134,30 @@ export default function AddressStep({ onNext }) {
                                     name="shipping"
                                     checked={selectedShippingAddress === addr.id}
                                     className="w-5 h-5 accent-[#23A6F0]"
-                                    readOnly
+                                    onChange={() => handleAddressClick(addr)}
                                 />
                                 <span className="font-bold text-sm text-[#252B42]">{addr.title}</span>
                             </div>
                             <div className="flex gap-1">
-                                <button onClick={(e) => handleEdit(e, addr)} className="p-2 hover:bg-blue-50 rounded-full text-[#23A6F0]"><Edit2 size={16}/></button>
-                                <button onClick={(e) => handleDelete(e, addr.id)} className="p-2 hover:bg-red-50 rounded-full text-red-500"><Trash2 size={16}/></button>
+                                <button onClick={(e) => handleEdit(e, addr)} className="p-2 hover:bg-blue-50 rounded-full text-[#23A6F0] transition-colors"><Edit2 size={16}/></button>
+                                <button onClick={(e) => handleDelete(e, addr.id)} className="p-2 hover:bg-red-50 rounded-full text-red-500 transition-colors"><Trash2 size={16}/></button>
                             </div>
                         </div>
 
                         <div className="space-y-1">
                             <p className="text-sm font-bold text-gray-800">{addr.name} {addr.surname}</p>
-                            <p className="text-[11px] text-gray-500 font-medium">{addr.phone}</p>
-                            <p className="text-xs text-gray-700 font-bold">{addr.city} / {addr.district}</p>
+                            <p className="text-[11px] text-gray-400 font-medium">{addr.phone}</p>
+                            <p className="text-xs text-gray-700 font-bold mt-1">{addr.city} / {addr.district}</p>
+                            <p className="text-[10px] text-gray-500 truncate">{addr.address}</p>
                         </div>
                     </div>
                 ))}
             </div>
 
+            {/* Fatura Adresi (Eğer kargo adresi ile aynı değilse) */}
             {!isBillingSame && (
-                <div className="mt-8 space-y-4">
-                    <h2 className="text-xl font-bold text-[#252B42]">Fatura Adresi</h2>
+                <div className="mt-8 animate-in slide-in-from-top-4 duration-300">
+                    <h2 className="text-xl font-bold text-[#252B42] mb-4">Fatura Adresi</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                         {addresses.map((addr) => (
                             <div

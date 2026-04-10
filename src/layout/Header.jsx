@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useHistory } from 'react-router-dom';
 import {
-  Phone, Mail, Search, ShoppingCart, Heart, User, Menu, X, Instagram, Youtube, Facebook, Twitter, ChevronDown
+  Phone, Mail, Search, ShoppingCart, Heart, User, Menu, X, Instagram, Youtube, Facebook, Twitter, ChevronDown, Package
 } from 'lucide-react';
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { useDispatch, useSelector } from 'react-redux';
@@ -33,6 +33,7 @@ export default function Header() {
     dispatch(setUser({}));
     localStorage.removeItem('token');
     history.push('/');
+    setIsMenuOpen(false);
   };
 
   const UserProfile = () => (
@@ -45,13 +46,22 @@ export default function Header() {
           default="identicon"
         />
         <span className="text-sm font-bold text-[#252B42] hidden sm:inline">{user.name}</span>
+        <ChevronDown size={14} className="text-[#737373]" />
       </div>
-      <div className="absolute top-full right-0 mt-2 w-32 bg-white shadow-lg border rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
+      
+      {/* DESKTOP DROPDOWN MENU */}
+      <div className="absolute top-full right-0 mt-2 w-48 bg-white shadow-xl border border-gray-100 rounded-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 py-2">
+        <Link 
+          to="/previous-orders" 
+          className="flex items-center gap-2 px-4 py-3 text-sm text-[#252B42] hover:bg-blue-50 hover:text-[#23A6F0] font-bold border-b border-gray-50"
+        >
+          <Package size={16} /> Siparişlerim
+        </Link>
         <button
           onClick={handleLogout}
-          className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 font-bold"
+          className="w-full text-left px-4 py-3 text-sm text-red-600 hover:bg-red-50 font-bold transition-colors"
         >
-          Logout
+          Çıkış Yap
         </button>
       </div>
     </div>
@@ -99,6 +109,7 @@ export default function Header() {
             </div>
           </div>
 
+          {/* MENU LINKS */}
           <div className={`
             ${isMenuOpen ? 'flex' : 'hidden'} 
             lg:flex flex-col lg:flex-row flex-1 items-center gap-8 lg:gap-4 
@@ -106,7 +117,7 @@ export default function Header() {
           `}>
             <Link to="/" onClick={() => setIsMenuOpen(false)} className={`hover:text-[#23A6F0] ${isActive('/') ? 'text-[#252B42]' : ''}`}>Home</Link>
 
-            {/* DESKTOP MEGA MENU  */}
+            {/* DESKTOP MEGA MENU */}
             <div className="relative group h-full hidden lg:flex items-center">
               <Link to="/shop" className={`flex items-center gap-1 hover:text-[#23A6F0] py-2 ${isActive('/shop') ? 'text-[#252B42]' : ''}`}>
                 Shop <MdKeyboardArrowDown size={20} className="transition-transform group-hover:rotate-180" />
@@ -144,7 +155,7 @@ export default function Header() {
               </div>
             </div>
 
-            {/*  MOBILE SHOP MENU  */}
+            {/* MOBILE SHOP MENU */}
             <div className="lg:hidden w-full flex flex-col items-center">
               <button onClick={() => setIsMobileShopOpen(!isMobileShopOpen)} className="flex items-center gap-1">
                 Shop <ChevronDown size={24} className={isMobileShopOpen ? 'rotate-180' : ''} />
@@ -172,23 +183,29 @@ export default function Header() {
             <Link to="/pricing" onClick={() => setIsMenuOpen(false)} className="hover:text-[#23A6F0]">Pricing</Link>
           </div>
 
-          {/* 3. MENU CONTENT */}
+          {/* 3. MENU CONTENT / MOBILE ACTIONS */}
           <div className={`
             ${isMenuOpen ? 'flex' : 'hidden'} 
             lg:flex flex-col lg:flex-row flex-1 items-center gap-8 lg:gap-4 
             mt-8 lg:mt-0 text-[#737373] font-bold text-2xl lg:text-sm
             max-h-[calc(100vh-100px)] overflow-y-auto w-full lg:max-h-none lg:overflow-visible
-            scrollbar-thin scrollbar-thumb-[#23A6F0]
           `}>
-            {/* --- MOBİL İÇİN AKSİYONLAR */}
             <div className="lg:hidden flex flex-col items-center gap-6 mt-4 pb-8 border-t pt-8 w-full border-gray-100">
               {user && user.name ? (
-                <div className="flex flex-col items-center gap-4">
-                  <div className="flex items-center gap-2">
-                    <Gravatar email={user.email || ""} size={32} className="rounded-full border border-[#23A6F0]" />
-                    <span className="text-[#252B42]">{user.name}</span>
+                <div className="flex flex-col items-center gap-6">
+                  <div className="flex flex-col items-center gap-2">
+                    <Gravatar email={user.email || ""} size={48} className="rounded-full border-2 border-[#23A6F0]" />
+                    <span className="text-[#252B42] text-xl">{user.name}</span>
                   </div>
-                  <button onClick={handleLogout} className="text-red-600 text-xl">Logout</button>
+                  {/* MOBILE PREVIOUS ORDERS LINK */}
+                  <Link 
+                    to="/previous-orders" 
+                    onClick={() => setIsMenuOpen(false)}
+                    className="flex items-center gap-2 text-[#23A6F0]"
+                  >
+                    <Package size={24} /> Siparişlerim
+                  </Link>
+                  <button onClick={handleLogout} className="text-red-600 text-xl font-bold">Çıkış Yap</button>
                 </div>
               ) : (
                 <div className="flex flex-col items-center gap-4 text-[#23A6F0]">
@@ -210,28 +227,26 @@ export default function Header() {
             </div>
           </div>
 
-          {/* 4. ACTIONS AREA */}
+          {/* 4. DESKTOP ACTIONS AREA */}
           <div className="hidden lg:flex items-center gap-6 text-[#23A6F0] font-bold">
             {user && user.name ? <UserProfile /> : <AuthLinks />}
-            <Search size={24} className="cursor-pointer hover:scale-110 transition-transform" />
+            <Search size={24} className="cursor-pointer hover:scale-110 transition-transform text-[#23A6F0]" />
 
             {/* SEPET DROPDOWN */}
             <div className="relative group flex items-center gap-1 cursor-pointer">
-              <Link to="/cart" className="flex items-center gap-1 hover:opacity-80">
+              <div className="flex items-center gap-1 hover:opacity-80" onClick={() => history.push('/cart')}>
                 <ShoppingCart size={24} />
                 <span className="text-xs bg-[#23A6F0] text-white rounded-full w-5 h-5 flex items-center justify-center -mt-3 -ml-2 font-bold">
                   {totalItems}
                 </span>
-              </Link>
+              </div>
 
-              {/* Dropdown Menü */}
+              {/* Dropdown Menü (Sepet) */}
               <div className="absolute top-full right-0 w-80 bg-white shadow-2xl border border-gray-100 rounded-xl p-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[110] text-[#252B42] mt-2">
-
                 <h3 className="font-bold border-b border-gray-50 pb-3 mb-3 text-sm">
                   Sepetim ({totalItems} Ürün)
                 </h3>
-
-                <div className="max-h-80 overflow-y-auto space-y-0 pr-2 custom-scrollbar">
+                <div className="max-h-80 overflow-y-auto space-y-0 pr-2">
                   {cart.length > 0 ? (
                     cart.map((item, idx) => (
                       <div key={idx} className="flex gap-4 items-center border-b border-gray-50 py-4 last:border-0">
@@ -240,15 +255,12 @@ export default function Header() {
                           alt={item.product.name}
                           className="w-16 h-20 object-cover rounded-lg border border-gray-50 shadow-sm"
                         />
-
                         <div className="flex-1 flex flex-col justify-between h-20">
                           <div>
                             <p className="text-[12px] font-bold line-clamp-2 leading-tight text-[#252B42]">
                               {item.product.name}
                             </p>
-                            <p className="text-[11px] text-[#737373] mt-1">
-                              Adet: {item.count}
-                            </p>
+                            <p className="text-[11px] text-[#737373] mt-1">Adet: {item.count}</p>
                           </div>
                           <p className="text-sm text-[#23A6F0] font-black tracking-tight">
                             ${(item.product.price * item.count).toFixed(2)}
@@ -257,24 +269,14 @@ export default function Header() {
                       </div>
                     ))
                   ) : (
-                    <div className="py-6 text-center text-[#737373] text-sm">
-                      Sepetiniz şu an boş.
-                    </div>
+                    <div className="py-6 text-center text-[#737373] text-sm">Sepetiniz şu an boş.</div>
                   )}
                 </div>
-
-                {/* Butonlar Bölümü */}
                 <div className="pt-4 flex gap-3 border-t border-gray-100 mt-2">
-                  <Link
-                    to="/cart"
-                    className="flex-1 text-center border border-[#23A6F0] text-[#23A6F0] py-2.5 rounded-lg font-bold text-xs hover:bg-blue-50 transition-all"
-                  >
+                  <Link to="/cart" className="flex-1 text-center border border-[#23A6F0] text-[#23A6F0] py-2.5 rounded-lg font-bold text-xs hover:bg-blue-50 transition-all">
                     Sepete Git
                   </Link>
-                  <Link
-                    to="/order"
-                    className="flex-1 text-center bg-[#23A6F0] text-white py-2.5 rounded-lg font-bold text-xs hover:bg-[#1a8cd3] transition-all shadow-md active:scale-95"
-                  >
+                  <Link to="/order" className="flex-1 text-center bg-[#23A6F0] text-white py-2.5 rounded-lg font-bold text-xs hover:bg-[#1a8cd3] transition-all shadow-md active:scale-95">
                     Siparişi Tamamla
                   </Link>
                 </div>
